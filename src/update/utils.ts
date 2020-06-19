@@ -1,0 +1,27 @@
+import fs from 'fs'
+import Spinner from 'ora'
+import VerEx from 'verbal-expressions'
+
+export const bumpBetaVersion = (spinner: typeof Spinner) => {
+  const spinner$ = spinner('Updating package.json...').start()
+  const packageJson = JSON.parse(fs.readFileSync('package.json').toString())
+  const versionNumberTester = VerEx()
+    .digit()
+    .oneOrMore()
+    .then('.')
+    .digit()
+    .oneOrMore()
+    .then('.')
+    .digit()
+    .oneOrMore()
+    .endOfLine()
+  if (!versionNumberTester.test(packageJson.version)) {
+    throw new Error('Version number should be in format XX.XX.XX digit only')
+  }
+  const versionNumber: number[] = packageJson.version.split('.').map(Number)
+  versionNumber[2]++
+  packageJson.version = versionNumber.join('.')
+  const stringifyResult = JSON.stringify(packageJson, null, '  ')
+  fs.writeFileSync('package.json', stringifyResult)
+  spinner$.succeed()
+}
