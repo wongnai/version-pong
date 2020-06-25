@@ -1,6 +1,6 @@
 import cli from 'commander'
-import { startCommand } from 'start'
 import { version } from '../package.json'
+import { startCommand } from './start'
 
 cli
   .version(version, '-v, --version')

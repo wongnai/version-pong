@@ -9,7 +9,7 @@ export const updatePackageJson = async (publishLevel: PublishLevel) => {
   try {
     switch (publishLevel) {
       case PublishLevel.BETA:
-        bumpBetaVersion(Spinner)
+        await bumpBetaVersion(Spinner)
         break
       case PublishLevel.MINOR:
         await standardVersion({

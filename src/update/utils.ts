@@ -1,8 +1,9 @@
+import execa from 'execa'
 import fs from 'fs'
 import Spinner from 'ora'
 import VerEx from 'verbal-expressions'
 
-export const bumpBetaVersion = (spinner: typeof Spinner) => {
+export const bumpBetaVersion = async (spinner: typeof Spinner) => {
   const spinner$ = spinner('Updating package.json...').start()
   const packageJson = JSON.parse(fs.readFileSync('package.json').toString())
   const versionNumberTester = VerEx()
@@ -23,5 +24,8 @@ export const bumpBetaVersion = (spinner: typeof Spinner) => {
   packageJson.version = versionNumber.join('.')
   const stringifyResult = JSON.stringify(packageJson, null, '  ')
   fs.writeFileSync('package.json', stringifyResult)
+  await execa(`git add package.json`)
+  await execa(`git commit -m "chore(release-beta): ${packageJson.version}"`)
+  await execa(`git tag v${packageJson.version}"`)
   spinner$.succeed()
 }
