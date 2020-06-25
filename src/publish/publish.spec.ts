@@ -3,6 +3,7 @@ import { DEFAULT_PUBLISH_COMMAND } from '../pongConstants'
 import * as publishType from './'
 
 describe('publish ', () => {
+  const MOCK_TAG = '1.2'
   const execaSpy = jest.fn()
   const spinnerSpy = jest.fn()
   const spinnerStartSpy = jest.fn()
@@ -75,19 +76,29 @@ describe('publish ', () => {
   })
 
   it('should throw error when execa recieve wrong command', async () => {
+    execaSpy.mockImplementation(() => ({
+      stdout: MOCK_TAG,
+    }))
     execaSpy.mockImplementationOnce(() => {
       throw new Error('Boom')
     })
     const { default: publish } = require('.') as typeof publishType
-
     const WRONG_COMMAND = 'something wrong'
+    const RESULT_PUBLISH_COMMAND = `${WRONG_COMMAND} --tag=beta`
+    const EXPECT_EXECA_COMMAND = [
+      [RESULT_PUBLISH_COMMAND],
+      ['git describe --tags'],
+      [`git tag -d ${MOCK_TAG}`],
+      ['git checkout HEAD^ -- package.json'],
+      ['git reset HEAD^ --soft'],
+    ]
+
     await publish(WRONG_COMMAND, PublishLevel.BETA)
 
     const EXPECTED_SPINNER_START = 'Publishing Package...'
     expect(spinnerSpy).toBeCalledWith(EXPECTED_SPINNER_START)
     expect(spinnerStartSpy).toBeCalledTimes(1)
-    const RESULT_PUBLISH_COMMAND = `${WRONG_COMMAND} --tag=beta`
-    expect(execaSpy).toBeCalledWith(RESULT_PUBLISH_COMMAND)
+    expect(execaSpy.mock.calls).toEqual(EXPECT_EXECA_COMMAND)
     expect(exitSpy).toBeCalledTimes(1)
   })
 })

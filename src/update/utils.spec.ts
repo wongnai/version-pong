@@ -6,10 +6,12 @@ describe('bumpBetaVersion', () => {
   const spinnerStartSpy = jest.fn()
   const spinnerSucceesSpy = jest.fn()
   const writeFileSyncSpy = jest.fn()
+  const execaSpy = jest.fn()
 
   const MOCK_SPINNER_ARGS = 'Updating package.json...'
   const PACKAGE_JSON_PATH = 'package.json'
 
+  jest.doMock('execa', () => execaSpy)
   jest.doMock('fs', () => ({
     readFileSync: readFileSyncSpy,
     writeFileSync: writeFileSyncSpy,
@@ -33,23 +35,35 @@ describe('bumpBetaVersion', () => {
     spinnerSpy.mockReset()
     spinnerStartSpy.mockReset()
     spinnerSucceesSpy.mockReset()
+    execaSpy.mockReset()
   })
 
   const { bumpBetaVersion } = require('./utils') as typeof bumpBetaVersionType
 
-  it('should bump version in package.json if argumet has correct version format', () => {
+  it('should bump version in package.json and execute git command if argumet has correct version format', async () => {
+    const MOCK_VERSION = '1.0.1'
+    const MOCK_VERSION_UPDATED = '1.0.2'
     const PACKAGE_JSON_BUFFER = Buffer.from(
       JSON.stringify({
-        version: '1.0.1',
+        version: MOCK_VERSION,
       }),
     )
-    const EXPECT_FINAL_JSON = JSON.stringify({ version: '1.0.2' }, null, '  ')
+    const EXPECT_FINAL_JSON = JSON.stringify(
+      { version: MOCK_VERSION_UPDATED },
+      null,
+      '  ',
+    )
+    const EXPECTED_EXECA_COMMANDS = [
+      [`git add package.json`],
+      [`git commit -m "chore(release-beta): ${MOCK_VERSION_UPDATED}"`],
+      [`git tag v${MOCK_VERSION_UPDATED}"`],
+    ]
 
     readFileSyncSpy.mockReturnValueOnce(PACKAGE_JSON_BUFFER)
     const catchSpy = jest.fn()
 
     try {
-      bumpBetaVersion(mockSpinner as any)
+      await bumpBetaVersion(mockSpinner as any)
     } catch (e) {
       console.log(e)
       catchSpy(e)
@@ -62,24 +76,34 @@ describe('bumpBetaVersion', () => {
       PACKAGE_JSON_PATH,
       EXPECT_FINAL_JSON,
     )
+    expect(execaSpy.mock.calls).toEqual(EXPECTED_EXECA_COMMANDS)
     expect(spinnerSucceesSpy).toBeCalledTimes(1)
 
+    execaSpy.mockReset()
+
     // second test
+    const MOCK_VERSION_2 = '0.0.19'
+    const MOCK_VERSION_2_UPDATED = '0.0.20'
     const PACKAGE_JSON_BUFFER_2 = Buffer.from(
       JSON.stringify({
-        version: '0.0.19',
+        version: MOCK_VERSION_2,
       }),
     )
     const EXPECT_FINAL_JSON_2 = JSON.stringify(
-      { version: '0.0.20' },
+      { version: MOCK_VERSION_2_UPDATED },
       null,
       '  ',
     )
+    const EXPECTED_EXECA_COMMANDS_2 = [
+      [`git add package.json`],
+      [`git commit -m "chore(release-beta): ${MOCK_VERSION_2_UPDATED}"`],
+      [`git tag v${MOCK_VERSION_2_UPDATED}"`],
+    ]
 
     readFileSyncSpy.mockReturnValueOnce(PACKAGE_JSON_BUFFER_2)
 
     try {
-      bumpBetaVersion(mockSpinner as any)
+      await bumpBetaVersion(mockSpinner as any)
     } catch (e) {
       console.log(e)
       catchSpy(e)
@@ -92,10 +116,11 @@ describe('bumpBetaVersion', () => {
       PACKAGE_JSON_PATH,
       EXPECT_FINAL_JSON_2,
     )
+    expect(execaSpy.mock.calls).toEqual(EXPECTED_EXECA_COMMANDS_2)
     expect(spinnerSucceesSpy).toBeCalledTimes(2)
   })
 
-  it('should throw error if argumet has incorrect version format', () => {
+  it('should throw error if argumet has incorrect version format', async () => {
     const PACKAGE_JSON_BUFFER = Buffer.from(
       JSON.stringify({
         version: '1.0.1-alpha',
@@ -106,7 +131,7 @@ describe('bumpBetaVersion', () => {
     readFileSyncSpy.mockReturnValueOnce(PACKAGE_JSON_BUFFER)
 
     try {
-      bumpBetaVersion(mockSpinner as any)
+      await bumpBetaVersion(mockSpinner as any)
     } catch (e) {
       console.log(e)
       catchSpy(e)
