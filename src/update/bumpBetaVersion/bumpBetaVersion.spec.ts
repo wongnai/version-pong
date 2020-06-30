@@ -1,4 +1,4 @@
-import * as bumpBetaVersionType from './utils'
+import * as utilsType from '.'
 
 describe('bumpBetaVersion', () => {
   const readFileSyncSpy = jest.fn()
@@ -38,7 +38,7 @@ describe('bumpBetaVersion', () => {
     execaSpy.mockReset()
   })
 
-  const { bumpBetaVersion } = require('./utils') as typeof bumpBetaVersionType
+  const { default: bumpBetaVersion } = require('.') as typeof utilsType
 
   it('should bump version in package.json and execute git command if argumet has correct version format', async () => {
     const MOCK_VERSION = '1.0.1'

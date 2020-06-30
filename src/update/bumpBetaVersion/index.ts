@@ -3,7 +3,7 @@ import fs from 'fs'
 import Spinner from 'ora'
 import VerEx from 'verbal-expressions'
 
-export const bumpBetaVersion = async (spinner: typeof Spinner) => {
+const bumpBetaVersion = async (spinner: typeof Spinner) => {
   const spinner$ = spinner('Updating package.json...').start()
   const packageJson = JSON.parse(fs.readFileSync('package.json').toString())
   const versionNumberTester = VerEx()
@@ -29,3 +29,5 @@ export const bumpBetaVersion = async (spinner: typeof Spinner) => {
   await execa(`git tag v${packageJson.version}"`)
   spinner$.succeed()
 }
+
+export default bumpBetaVersion
