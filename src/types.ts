@@ -1,7 +1,7 @@
 export enum PublishLevel {
-  BETA,
-  MINOR,
-  MAJOR,
+  BETA = 'beta',
+  MINOR = 'minor',
+  MAJOR = 'major',
 }
 
 export interface IOptions {

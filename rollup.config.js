@@ -18,5 +18,7 @@ export default {
     'standard-version',
     'fs',
     'verbal-expressions',
+    'chalk',
+    'inquirer',
   ],
 }
