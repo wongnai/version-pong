@@ -1,11 +1,12 @@
 import chalk from 'chalk'
 import execa from 'execa'
 import Asker from 'inquirer'
+import { isEmpty } from 'lodash'
 import { PublishBranch } from 'pongConstants'
 import { PublishLevel } from 'types'
 import { questions } from './questions'
 
-const checkForBranchError = async (publishLevel: PublishLevel) => {
+const checkGitError = async (publishLevel: PublishLevel) => {
   const preferredBranch = PublishBranch[publishLevel]
   const { stdout: currentBranch } = await execa(
     `git rev-parse --abbrev-ref HEAD`,
@@ -21,6 +22,11 @@ const checkForBranchError = async (publishLevel: PublishLevel) => {
       process.exit(1)
     }
   }
+  const { stdout } = await execa('git status --porcelain')
+  if (!isEmpty(stdout)) {
+    throw Error(`some files or directories are not commited:\n${stdout}`)
+  }
+  await execa('git pull')
 }
 
-export default checkForBranchError
+export default checkGitError

@@ -20,5 +20,6 @@ export default {
     'verbal-expressions',
     'chalk',
     'inquirer',
+    'lodash',
   ],
 }

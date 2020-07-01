@@ -7,7 +7,7 @@ describe('startCommand', () => {
   const spinnerSpy = jest.fn()
   const spinnerStartSpy = jest.fn()
   const spinnerSucceesSpy = jest.fn()
-  const checkForBranchErrorSpy = jest.fn()
+
   const processExitSpy = jest
     .spyOn(process, 'exit')
     .mockImplementation((() => ({})) as any)
@@ -15,7 +15,6 @@ describe('startCommand', () => {
   const MOCK_SPINNER_ARGS = 'Tagging Package Version...'
 
   jest.doMock('standard-version', () => standardVersionSpy)
-  jest.doMock('./checkForBranchError', () => checkForBranchErrorSpy)
   jest.doMock('./bumpBetaVersion', () => bumpBetaVersionSpy)
 
   const mockSpinner = (arg: string) => {
@@ -36,23 +35,24 @@ describe('startCommand', () => {
     spinnerSpy.mockReset()
     spinnerStartSpy.mockReset()
     spinnerSucceesSpy.mockReset()
-    checkForBranchErrorSpy.mockReset()
   })
 
   it('should use correct publish method when publish as beta', async () => {
-    const { updatePackageJson } = require('.') as typeof updatePackageJsonType
+    const {
+      default: updatePackageJson,
+    } = require('.') as typeof updatePackageJsonType
     await updatePackageJson(PublishLevel.BETA)
     expect(spinnerSpy).toBeCalledWith(MOCK_SPINNER_ARGS)
     expect(spinnerStartSpy).toBeCalledTimes(1)
-    expect(checkForBranchErrorSpy).toBeCalledWith(PublishLevel.BETA)
-    expect(checkForBranchErrorSpy).toBeCalledTimes(1)
     expect(bumpBetaVersionSpy).toBeCalledWith(mockSpinner)
     expect(spinnerSucceesSpy).toBeCalledTimes(1)
     expect(processExitSpy).not.toBeCalled()
   })
 
   it('should use correct publish method when publish as minor', async () => {
-    const { updatePackageJson } = require('.') as typeof updatePackageJsonType
+    const {
+      default: updatePackageJson,
+    } = require('.') as typeof updatePackageJsonType
     await updatePackageJson(PublishLevel.MINOR)
     expect(spinnerSpy).toBeCalledWith(MOCK_SPINNER_ARGS)
     expect(spinnerStartSpy).toBeCalledTimes(1)
@@ -60,15 +60,15 @@ describe('startCommand', () => {
       releaseAs: 'minor',
       silent: true,
     }
-    expect(checkForBranchErrorSpy).toBeCalledWith(PublishLevel.MINOR)
-    expect(checkForBranchErrorSpy).toBeCalledTimes(1)
     expect(standardVersionSpy).toBeCalledWith(STANDARD_VERSION_ARGS)
     expect(spinnerSucceesSpy).toBeCalledTimes(1)
     expect(processExitSpy).not.toBeCalled()
   })
 
   it('should use correct publish method when publish as major', async () => {
-    const { updatePackageJson } = require('.') as typeof updatePackageJsonType
+    const {
+      default: updatePackageJson,
+    } = require('.') as typeof updatePackageJsonType
     await updatePackageJson(PublishLevel.MAJOR)
     expect(spinnerSpy).toBeCalledWith(MOCK_SPINNER_ARGS)
     expect(spinnerStartSpy).toBeCalledTimes(1)
@@ -76,20 +76,22 @@ describe('startCommand', () => {
       releaseAs: 'major',
       silent: true,
     }
-    expect(checkForBranchErrorSpy).toBeCalledWith(PublishLevel.MAJOR)
-    expect(checkForBranchErrorSpy).toBeCalledTimes(1)
     expect(standardVersionSpy).toBeCalledWith(STANDARD_VERSION_ARGS)
     expect(spinnerSucceesSpy).toBeCalledTimes(1)
     expect(processExitSpy).not.toBeCalled()
   })
 
-  it('should exit process when using wrong publish level', async () => {
-    const { updatePackageJson } = require('.') as typeof updatePackageJsonType
-    await updatePackageJson('sd' as PublishLevel)
-    expect(spinnerSpy).not.toBeCalled()
-    expect(spinnerStartSpy).not.toBeCalled()
+  it('should exit process when error happens', async () => {
+    const {
+      default: updatePackageJson,
+    } = require('.') as typeof updatePackageJsonType
+    bumpBetaVersionSpy.mockImplementationOnce(() => {
+      throw new Error('BOOM')
+    })
+    await updatePackageJson(PublishLevel.BETA)
+    expect(spinnerSpy).toBeCalledTimes(1)
+    expect(spinnerStartSpy).toBeCalledTimes(1)
     expect(spinnerSucceesSpy).not.toBeCalled()
-    expect(checkForBranchErrorSpy).not.toBeCalled()
     expect(processExitSpy).toBeCalledWith(1)
   })
 })

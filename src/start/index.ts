@@ -1,10 +1,11 @@
+import checkCommonsError from 'checkCommonsError'
 import publish from 'publish'
-import { IOptions, PublishLevel } from 'types'
-import { updatePackageJson } from 'update'
+import { PublishLevel } from 'types'
+import updatePackageJson from 'update'
 
-export const startCommand = async (publishLevel: string, options: IOptions) => {
-  const publishCommand = options.publishMethod
+export const startCommand = async (publishLevel: string) => {
   const publishLevelKey = publishLevel.toLowerCase() as PublishLevel
+  const updatedPublishCommand = await checkCommonsError(publishLevelKey)
   await updatePackageJson(publishLevelKey)
-  await publish(publishCommand, publishLevelKey)
+  await publish(updatedPublishCommand, publishLevelKey)
 }

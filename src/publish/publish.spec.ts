@@ -4,6 +4,7 @@ import * as publishType from './'
 
 describe('publish ', () => {
   const MOCK_TAG = '1.2'
+  const GIT_PUSH_COMMAND = 'git push --follow-tags'
   const execaSpy = jest.fn()
   const spinnerSpy = jest.fn()
   const spinnerStartSpy = jest.fn()
@@ -45,6 +46,8 @@ describe('publish ', () => {
     expect(spinnerStartSpy).toBeCalledTimes(1)
     const RESULT_PUBLISH_COMMAND = `${MOCK_PUBLISH_COMMAND} --tag=beta`
     expect(execaSpy).toBeCalledWith(RESULT_PUBLISH_COMMAND)
+    expect(execaSpy).toBeCalledWith(GIT_PUSH_COMMAND)
+    expect(execaSpy).toBeCalledTimes(2)
     expect(spinnerSucceesSpy).toBeCalledTimes(1)
     expect(exitSpy).not.toBeCalled()
   })
@@ -58,6 +61,8 @@ describe('publish ', () => {
     expect(spinnerSpy).toBeCalledWith(EXPECTED_SPINNER_START)
     expect(spinnerStartSpy).toBeCalledTimes(1)
     expect(execaSpy).toBeCalledWith(MOCK_PUBLISH_COMMAND)
+    expect(execaSpy).toBeCalledWith(GIT_PUSH_COMMAND)
+    expect(execaSpy).toBeCalledTimes(2)
     expect(spinnerSucceesSpy).toBeCalledTimes(1)
     expect(exitSpy).not.toBeCalled()
   })
@@ -71,11 +76,14 @@ describe('publish ', () => {
     expect(spinnerSpy).toBeCalledWith(EXPECTED_SPINNER_START)
     expect(spinnerStartSpy).toBeCalledTimes(1)
     expect(execaSpy).toBeCalledWith(DEFAULT_PUBLISH_COMMAND)
+    expect(execaSpy).toBeCalledWith(GIT_PUSH_COMMAND)
+    expect(execaSpy).toBeCalledTimes(2)
     expect(spinnerSucceesSpy).toBeCalledTimes(1)
     expect(exitSpy).not.toBeCalled()
   })
 
-  it('should throw error when execa recieve wrong command', async () => {
+  // tslint:disable-next-line: max-line-length
+  it('should throw error and reset changelog.md when execa recieve wrong command in major and minor publish', async () => {
     execaSpy.mockImplementation(() => ({
       stdout: MOCK_TAG,
     }))
@@ -94,6 +102,34 @@ describe('publish ', () => {
     ]
 
     await publish(WRONG_COMMAND, PublishLevel.BETA)
+
+    const EXPECTED_SPINNER_START = 'Publishing Package...'
+    expect(spinnerSpy).toBeCalledWith(EXPECTED_SPINNER_START)
+    expect(spinnerStartSpy).toBeCalledTimes(1)
+    expect(execaSpy.mock.calls).toEqual(EXPECT_EXECA_COMMAND)
+    expect(exitSpy).toBeCalledTimes(1)
+  })
+
+  it('should throw error but not reset changelog.md when execa recieve wrong command in beta publish', async () => {
+    execaSpy.mockImplementation(() => ({
+      stdout: MOCK_TAG,
+    }))
+    execaSpy.mockImplementationOnce(() => {
+      throw new Error('Boom')
+    })
+    const { default: publish } = require('.') as typeof publishType
+    const WRONG_COMMAND = 'something wrong'
+    const RESULT_PUBLISH_COMMAND = WRONG_COMMAND
+    const EXPECT_EXECA_COMMAND = [
+      [RESULT_PUBLISH_COMMAND],
+      ['git describe --tags'],
+      [`git tag -d ${MOCK_TAG}`],
+      ['git checkout HEAD^ -- package.json'],
+      ['git checkout HEAD^ -- CHANGELOG.md'],
+      ['git reset HEAD^ --soft'],
+    ]
+
+    await publish(WRONG_COMMAND, PublishLevel.MINOR)
 
     const EXPECTED_SPINNER_START = 'Publishing Package...'
     expect(spinnerSpy).toBeCalledWith(EXPECTED_SPINNER_START)
