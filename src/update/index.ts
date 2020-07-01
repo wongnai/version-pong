@@ -1,19 +1,10 @@
 import Spinner from 'ora'
-import { PublishBranch } from 'pongConstants'
 import standardVersion from 'standard-version'
 import { PublishLevel } from 'types'
 import bumpBetaVersion from './bumpBetaVersion'
-import checkForBranchError from './checkForBranchError'
 
-export const updatePackageJson = async (publishLevel: PublishLevel) => {
+const updatePackageJson = async (publishLevel: PublishLevel) => {
   try {
-    const isPublishLevelExist = Object.values(PublishLevel).includes(
-      publishLevel,
-    )
-    if (!isPublishLevelExist) {
-      throw new Error('Wrong Publish Level!')
-    }
-    await checkForBranchError(publishLevel)
     const spinner = Spinner('Tagging Package Version...').start()
     switch (publishLevel) {
       case PublishLevel.BETA:
@@ -39,3 +30,5 @@ export const updatePackageJson = async (publishLevel: PublishLevel) => {
     process.exit(1)
   }
 }
+
+export default updatePackageJson

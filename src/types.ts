@@ -3,7 +3,3 @@ export enum PublishLevel {
   MINOR = 'minor',
   MAJOR = 'major',
 }
-
-export interface IOptions {
-  publishMethod: string
-}
