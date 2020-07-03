@@ -13,7 +13,7 @@ const checkPublishMethod = async (): Promise<string> => {
   ) {
     console.log(
       chalk.blue.bold(
-        'There is no publish command specified both on package.json. Please sepcified publish command',
+        'There is no publish command specified both on package.json. Please specify publish command',
       ),
     )
     const answer: { publishCommand: string } = await Asker.prompt(questions)
