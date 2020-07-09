@@ -21,5 +21,6 @@ export default {
     'chalk',
     'inquirer',
     'lodash',
+    'semver',
   ],
 }
