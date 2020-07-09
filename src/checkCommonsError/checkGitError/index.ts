@@ -9,7 +9,7 @@ import { PublishLevel } from 'types'
 import { questions } from './questions'
 
 const checkGitError = async (publishLevel: PublishLevel) => {
-  const { stdout: rawVersion } = await execa('git --version')
+  const { stdout: rawVersion } = await execa.command('git --version')
   const gitVersion = semver.coerce(rawVersion) || '0.0.0'
   const isBelowMinimumVersion = semver.lt(gitVersion, GIT_MIN_VERSION)
   if (isBelowMinimumVersion) {
@@ -18,7 +18,7 @@ const checkGitError = async (publishLevel: PublishLevel) => {
     )
   }
   const preferredBranch = PublishBranch[publishLevel]
-  const { stdout: currentBranch } = await execa(
+  const { stdout: currentBranch } = await execa.command(
     `git rev-parse --abbrev-ref HEAD`,
   )
   if (currentBranch !== preferredBranch) {
@@ -32,11 +32,11 @@ const checkGitError = async (publishLevel: PublishLevel) => {
       process.exit(1)
     }
   }
-  const { stdout } = await execa('git status --porcelain')
+  const { stdout } = await execa.command('git status --porcelain')
   if (!isEmpty(stdout)) {
     throw Error(`some files or directories are not commited:\n${stdout}`)
   }
-  await execa('git pull')
+  await execa.command('git pull')
 }
 
 export default checkGitError

@@ -11,7 +11,7 @@ describe('bumpBetaVersion', () => {
   const MOCK_SPINNER_ARGS = 'Updating package.json...'
   const PACKAGE_JSON_PATH = 'package.json'
 
-  jest.doMock('execa', () => execaSpy)
+  jest.doMock('execa', () => ({ command: execaSpy }))
   jest.doMock('fs', () => ({
     readFileSync: readFileSyncSpy,
     writeFileSync: writeFileSyncSpy,
@@ -55,8 +55,8 @@ describe('bumpBetaVersion', () => {
     )
     const EXPECTED_EXECA_COMMANDS = [
       [`git add package.json`],
-      [`git commit -m "chore(release-beta): ${MOCK_VERSION_UPDATED}"`],
-      [`git tag v${MOCK_VERSION_UPDATED}"`],
+      [`git commit -m "chore(release-beta):\\${MOCK_VERSION_UPDATED}"`],
+      [`git tag v${MOCK_VERSION_UPDATED}`],
     ]
 
     readFileSyncSpy.mockReturnValueOnce(PACKAGE_JSON_BUFFER)
@@ -96,8 +96,8 @@ describe('bumpBetaVersion', () => {
     )
     const EXPECTED_EXECA_COMMANDS_2 = [
       [`git add package.json`],
-      [`git commit -m "chore(release-beta): ${MOCK_VERSION_2_UPDATED}"`],
-      [`git tag v${MOCK_VERSION_2_UPDATED}"`],
+      [`git commit -m "chore(release-beta):\\${MOCK_VERSION_2_UPDATED}"`],
+      [`git tag v${MOCK_VERSION_2_UPDATED}`],
     ]
 
     readFileSyncSpy.mockReturnValueOnce(PACKAGE_JSON_BUFFER_2)
