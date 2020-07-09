@@ -21,7 +21,7 @@ describe('checkGitError', () => {
   const consoleLogSpy = jest.spyOn(console, 'log')
   const processExitSpy = jest.spyOn(process, 'exit')
 
-  jest.doMock('execa', () => execaSpy)
+  jest.doMock('execa', () => ({ command: execaSpy }))
   jest.doMock('chalk', () => ({ red: { bold: chalkSpy } }))
   jest.doMock('inquirer', () => ({ prompt: promptSpy }))
 

@@ -24,9 +24,11 @@ const bumpBetaVersion = async (spinner: typeof Spinner) => {
   packageJson.version = versionNumber.join('.')
   const stringifyResult = JSON.stringify(packageJson, null, '  ')
   fs.writeFileSync('package.json', stringifyResult)
-  await execa(`git add package.json`)
-  await execa(`git commit -m "chore(release-beta): ${packageJson.version}"`)
-  await execa(`git tag v${packageJson.version}"`)
+  await execa.command(`git add package.json`)
+  await execa.command(
+    `git commit -m "chore(release-beta):\\${packageJson.version}"`,
+  )
+  await execa.command(`git tag v${packageJson.version}`)
   spinner$.succeed()
 }
 

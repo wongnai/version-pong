@@ -13,7 +13,11 @@ describe('publish ', () => {
     .spyOn(process, 'exit')
     .mockImplementation((() => ({})) as any)
 
-  jest.doMock('execa', () => execaSpy)
+  jest.doMock('execa', () => {
+    const execa = execaSpy
+    Object.defineProperty(execa, 'command', { value: execaSpy })
+    return execa
+  })
 
   const MOCK_PUBLISH_COMMAND = 'publish'
 
@@ -45,7 +49,7 @@ describe('publish ', () => {
     expect(spinnerSpy).toBeCalledWith(EXPECTED_SPINNER_START)
     expect(spinnerStartSpy).toBeCalledTimes(1)
     const RESULT_PUBLISH_COMMAND = `${MOCK_PUBLISH_COMMAND} --tag=beta`
-    expect(execaSpy).toBeCalledWith(RESULT_PUBLISH_COMMAND)
+    expect(execaSpy).toBeCalledWith('sh', ['-c', RESULT_PUBLISH_COMMAND])
     expect(execaSpy).toBeCalledWith(GIT_PUSH_COMMAND)
     expect(execaSpy).toBeCalledTimes(2)
     expect(spinnerSucceesSpy).toBeCalledTimes(1)
@@ -60,7 +64,7 @@ describe('publish ', () => {
     const EXPECTED_SPINNER_START = 'Publishing Package...'
     expect(spinnerSpy).toBeCalledWith(EXPECTED_SPINNER_START)
     expect(spinnerStartSpy).toBeCalledTimes(1)
-    expect(execaSpy).toBeCalledWith(MOCK_PUBLISH_COMMAND)
+    expect(execaSpy).toBeCalledWith('sh', ['-c', MOCK_PUBLISH_COMMAND])
     expect(execaSpy).toBeCalledWith(GIT_PUSH_COMMAND)
     expect(execaSpy).toBeCalledTimes(2)
     expect(spinnerSucceesSpy).toBeCalledTimes(1)
@@ -75,7 +79,7 @@ describe('publish ', () => {
     const EXPECTED_SPINNER_START = 'Publishing Package...'
     expect(spinnerSpy).toBeCalledWith(EXPECTED_SPINNER_START)
     expect(spinnerStartSpy).toBeCalledTimes(1)
-    expect(execaSpy).toBeCalledWith(DEFAULT_PUBLISH_COMMAND)
+    expect(execaSpy).toBeCalledWith('sh', ['-c', DEFAULT_PUBLISH_COMMAND])
     expect(execaSpy).toBeCalledWith(GIT_PUSH_COMMAND)
     expect(execaSpy).toBeCalledTimes(2)
     expect(spinnerSucceesSpy).toBeCalledTimes(1)
@@ -94,7 +98,7 @@ describe('publish ', () => {
     const WRONG_COMMAND = 'something wrong'
     const RESULT_PUBLISH_COMMAND = `${WRONG_COMMAND} --tag=beta`
     const EXPECT_EXECA_COMMAND = [
-      [RESULT_PUBLISH_COMMAND],
+      ['sh', ['-c', RESULT_PUBLISH_COMMAND]],
       ['git describe --tags'],
       [`git tag -d ${MOCK_TAG}`],
       ['git checkout HEAD^ -- package.json'],
@@ -121,7 +125,7 @@ describe('publish ', () => {
     const WRONG_COMMAND = 'something wrong'
     const RESULT_PUBLISH_COMMAND = WRONG_COMMAND
     const EXPECT_EXECA_COMMAND = [
-      [RESULT_PUBLISH_COMMAND],
+      ['sh', ['-c', RESULT_PUBLISH_COMMAND]],
       ['git describe --tags'],
       [`git tag -d ${MOCK_TAG}`],
       ['git checkout HEAD^ -- package.json'],
