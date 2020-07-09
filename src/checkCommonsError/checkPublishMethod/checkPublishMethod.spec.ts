@@ -30,7 +30,7 @@ describe('checkPublishMethod', () => {
     default: checkPublishMethod,
   } = require('.') as typeof checkPublishMethodType
 
-  it('should use publishCommand in package.json if publishCommand not specified on cli', async () => {
+  it('should use publishCommand in package.json if publishCommand not specify on cli', async () => {
     const MOCK_PUBLISH_COMMAND = 'publish_commands'
     const PACKAGE_JSON_BUFFER = Buffer.from(
       JSON.stringify({
@@ -50,11 +50,11 @@ describe('checkPublishMethod', () => {
     expect(result).toBe(MOCK_PUBLISH_COMMAND)
   })
 
-  it('should use publishCommand in package.json if publishCommand not specified on cli', async () => {
+  it('should use publishCommand in package.json if publishCommand not specifiy on cli', async () => {
     const MOCK_PUBLISH_COMMAND = 'publish_commands'
     promptSpy.mockReturnValue({ publishCommand: MOCK_PUBLISH_COMMAND })
     const CHALK_ARGS =
-      'There is no publish command specified both on package.json. Please sepcified publish command'
+      'There is no publish command specified both on package.json. Please specify publish command'
     const PACKAGE_JSON_BUFFER = Buffer.from(
       JSON.stringify({
         test: 'test',

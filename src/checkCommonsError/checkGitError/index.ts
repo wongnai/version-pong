@@ -2,11 +2,21 @@ import chalk from 'chalk'
 import execa from 'execa'
 import Asker from 'inquirer'
 import { isEmpty } from 'lodash'
-import { PublishBranch } from 'pongConstants'
+import { GIT_MIN_VERSION, PublishBranch } from 'pongConstants'
+import semver from 'semver'
 import { PublishLevel } from 'types'
+
 import { questions } from './questions'
 
 const checkGitError = async (publishLevel: PublishLevel) => {
+  const { stdout: rawVersion } = await execa('git --version')
+  const gitVersion = semver.coerce(rawVersion) || '0.0.0'
+  const isBelowMinimumVersion = semver.lt(gitVersion, GIT_MIN_VERSION)
+  if (isBelowMinimumVersion) {
+    throw new Error(
+      `You need at least git version ${GIT_MIN_VERSION} to use version-pong`,
+    )
+  }
   const preferredBranch = PublishBranch[publishLevel]
   const { stdout: currentBranch } = await execa(
     `git rev-parse --abbrev-ref HEAD`,

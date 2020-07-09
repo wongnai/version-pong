@@ -7,3 +7,5 @@ export const PublishBranch = {
   [PublishLevel.MINOR]: 'master',
   [PublishLevel.MAJOR]: 'master',
 }
+
+export const GIT_MIN_VERSION = '2.2.3'
