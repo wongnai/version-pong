@@ -10,6 +10,7 @@ describe('bumpBetaVersion', () => {
 
   const MOCK_SPINNER_ARGS = 'Updating package.json...'
   const PACKAGE_JSON_PATH = 'package.json'
+  const MOCK_NAME = 'name'
 
   jest.doMock('execa', () => ({ command: execaSpy }))
   jest.doMock('fs', () => ({
@@ -41,24 +42,30 @@ describe('bumpBetaVersion', () => {
   const { default: bumpBetaVersion } = require('.') as typeof utilsType
 
   it('should bump version in package.json and execute git command if argumet has correct version format', async () => {
+    const MOCK_REGISTRY_VERSION = '1.0.0'
     const MOCK_VERSION = '1.0.1'
     const MOCK_VERSION_UPDATED = '1.0.2'
     const PACKAGE_JSON_BUFFER = Buffer.from(
       JSON.stringify({
+        name: MOCK_NAME,
         version: MOCK_VERSION,
       }),
     )
     const EXPECT_FINAL_JSON = JSON.stringify(
-      { version: MOCK_VERSION_UPDATED },
+      { name: MOCK_NAME, version: MOCK_VERSION_UPDATED },
       null,
       '  ',
     )
     const EXPECTED_EXECA_COMMANDS = [
+      [
+        `npm view ${MOCK_NAME}@beta version --registry=https://nexus.wndv.co/repository/wongnai-npm/`,
+      ],
       [`git add package.json`],
       [`git commit -m "chore(release-beta):\\${MOCK_VERSION_UPDATED}"`],
       [`git tag v${MOCK_VERSION_UPDATED}`],
     ]
 
+    execaSpy.mockReturnValueOnce({ stdout: MOCK_REGISTRY_VERSION })
     readFileSyncSpy.mockReturnValueOnce(PACKAGE_JSON_BUFFER)
     const catchSpy = jest.fn()
 
@@ -82,24 +89,30 @@ describe('bumpBetaVersion', () => {
     execaSpy.mockReset()
 
     // second test
+    const MOCK_REGISTRY_VERSION_2 = '0.0.18'
     const MOCK_VERSION_2 = '0.0.19'
     const MOCK_VERSION_2_UPDATED = '0.0.20'
     const PACKAGE_JSON_BUFFER_2 = Buffer.from(
       JSON.stringify({
+        name: MOCK_NAME,
         version: MOCK_VERSION_2,
       }),
     )
     const EXPECT_FINAL_JSON_2 = JSON.stringify(
-      { version: MOCK_VERSION_2_UPDATED },
+      { name: MOCK_NAME, version: MOCK_VERSION_2_UPDATED },
       null,
       '  ',
     )
     const EXPECTED_EXECA_COMMANDS_2 = [
+      [
+        `npm view ${MOCK_NAME}@beta version --registry=https://nexus.wndv.co/repository/wongnai-npm/`,
+      ],
       [`git add package.json`],
       [`git commit -m "chore(release-beta):\\${MOCK_VERSION_2_UPDATED}"`],
       [`git tag v${MOCK_VERSION_2_UPDATED}`],
     ]
 
+    execaSpy.mockReturnValueOnce({ stdout: MOCK_REGISTRY_VERSION_2 })
     readFileSyncSpy.mockReturnValueOnce(PACKAGE_JSON_BUFFER_2)
 
     try {
@@ -142,5 +155,51 @@ describe('bumpBetaVersion', () => {
     expect(catchSpy).toBeCalledTimes(1)
     expect(writeFileSyncSpy).not.toBeCalled()
     expect(spinnerSucceesSpy).not.toBeCalled()
+  })
+
+  it('should bump version in package.json and execute git command if argumet has correct version format and should use version from registry if it is higher', async () => {
+    const MOCK_REGISTRY_VERSION = '1.1.0'
+    const MOCK_VERSION = '1.0.1'
+    const MOCK_VERSION_UPDATED = '1.1.1'
+    const PACKAGE_JSON_BUFFER = Buffer.from(
+      JSON.stringify({
+        name: MOCK_NAME,
+        version: MOCK_VERSION,
+      }),
+    )
+    const EXPECT_FINAL_JSON = JSON.stringify(
+      { name: MOCK_NAME, version: MOCK_VERSION_UPDATED },
+      null,
+      '  ',
+    )
+    const EXPECTED_EXECA_COMMANDS = [
+      [
+        `npm view ${MOCK_NAME}@beta version --registry=https://nexus.wndv.co/repository/wongnai-npm/`,
+      ],
+      [`git add package.json`],
+      [`git commit -m "chore(release-beta):\\${MOCK_VERSION_UPDATED}"`],
+      [`git tag v${MOCK_VERSION_UPDATED}`],
+    ]
+
+    execaSpy.mockReturnValueOnce({ stdout: MOCK_REGISTRY_VERSION })
+    readFileSyncSpy.mockReturnValueOnce(PACKAGE_JSON_BUFFER)
+    const catchSpy = jest.fn()
+
+    try {
+      await bumpBetaVersion(mockSpinner as any)
+    } catch (e) {
+      console.log(e)
+      catchSpy(e)
+    }
+
+    expect(catchSpy).not.toBeCalled()
+    expect(spinnerSpy).toBeCalledWith(MOCK_SPINNER_ARGS)
+    expect(spinnerStartSpy).toBeCalledTimes(1)
+    expect(writeFileSyncSpy).toBeCalledWith(
+      PACKAGE_JSON_PATH,
+      EXPECT_FINAL_JSON,
+    )
+    expect(execaSpy.mock.calls).toEqual(EXPECTED_EXECA_COMMANDS)
+    expect(spinnerSucceesSpy).toBeCalledTimes(1)
   })
 })
