@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://git.wndv.co///compare/v1.4.0...v1.5.0) (2020-07-31)
+
+
+### Bug Fixes
+
+* change npm registry to be dynamic ([958ba40](https://git.wndv.co///commit/958ba40bbd09582e8be2b8b37b7578477d455711))
+
 ## [1.4.0](https://git.wndv.co///compare/v1.3.0...v1.4.0) (2020-07-23)
 
 
