@@ -22,7 +22,7 @@ const bumpBetaVersion = async (spinner: typeof Spinner) => {
   }
 
   const { stdout: versionOnRegistry } = await execa.command(
-    `npm view ${packageJson.name}@beta version --registry=https://nexus.wndv.co/repository/wongnai-npm/`,
+    `npm view ${packageJson.name}@beta version --registry=${packageJson.publishConfig.registry}`,
   )
   const isLowerThanRegistryVersion = semver.lt(
     packageJson.version,

@@ -11,6 +11,7 @@ describe('bumpBetaVersion', () => {
   const MOCK_SPINNER_ARGS = 'Updating package.json...'
   const PACKAGE_JSON_PATH = 'package.json'
   const MOCK_NAME = 'name'
+  const MOCK_REGISTRY = 'registry'
 
   jest.doMock('execa', () => ({ command: execaSpy }))
   jest.doMock('fs', () => ({
@@ -48,18 +49,21 @@ describe('bumpBetaVersion', () => {
     const PACKAGE_JSON_BUFFER = Buffer.from(
       JSON.stringify({
         name: MOCK_NAME,
+        publishConfig: { registry: MOCK_REGISTRY },
         version: MOCK_VERSION,
       }),
     )
     const EXPECT_FINAL_JSON = JSON.stringify(
-      { name: MOCK_NAME, version: MOCK_VERSION_UPDATED },
+      {
+        name: MOCK_NAME,
+        publishConfig: { registry: MOCK_REGISTRY },
+        version: MOCK_VERSION_UPDATED,
+      },
       null,
       '  ',
     )
     const EXPECTED_EXECA_COMMANDS = [
-      [
-        `npm view ${MOCK_NAME}@beta version --registry=https://nexus.wndv.co/repository/wongnai-npm/`,
-      ],
+      [`npm view ${MOCK_NAME}@beta version --registry=${MOCK_REGISTRY}`],
       [`git add package.json`],
       [`git commit -m "chore(release-beta):\\${MOCK_VERSION_UPDATED}"`],
       [`git tag v${MOCK_VERSION_UPDATED}`],
@@ -95,18 +99,22 @@ describe('bumpBetaVersion', () => {
     const PACKAGE_JSON_BUFFER_2 = Buffer.from(
       JSON.stringify({
         name: MOCK_NAME,
+        publishConfig: { registry: MOCK_REGISTRY },
         version: MOCK_VERSION_2,
       }),
     )
     const EXPECT_FINAL_JSON_2 = JSON.stringify(
-      { name: MOCK_NAME, version: MOCK_VERSION_2_UPDATED },
+      {
+        name: MOCK_NAME,
+        publishConfig: { registry: MOCK_REGISTRY },
+        version: MOCK_VERSION_2_UPDATED,
+      },
+
       null,
       '  ',
     )
     const EXPECTED_EXECA_COMMANDS_2 = [
-      [
-        `npm view ${MOCK_NAME}@beta version --registry=https://nexus.wndv.co/repository/wongnai-npm/`,
-      ],
+      [`npm view ${MOCK_NAME}@beta version --registry=${MOCK_REGISTRY}`],
       [`git add package.json`],
       [`git commit -m "chore(release-beta):\\${MOCK_VERSION_2_UPDATED}"`],
       [`git tag v${MOCK_VERSION_2_UPDATED}`],
@@ -164,18 +172,21 @@ describe('bumpBetaVersion', () => {
     const PACKAGE_JSON_BUFFER = Buffer.from(
       JSON.stringify({
         name: MOCK_NAME,
+        publishConfig: { registry: MOCK_REGISTRY },
         version: MOCK_VERSION,
       }),
     )
     const EXPECT_FINAL_JSON = JSON.stringify(
-      { name: MOCK_NAME, version: MOCK_VERSION_UPDATED },
+      {
+        name: MOCK_NAME,
+        publishConfig: { registry: MOCK_REGISTRY },
+        version: MOCK_VERSION_UPDATED,
+      },
       null,
       '  ',
     )
     const EXPECTED_EXECA_COMMANDS = [
-      [
-        `npm view ${MOCK_NAME}@beta version --registry=https://nexus.wndv.co/repository/wongnai-npm/`,
-      ],
+      [`npm view ${MOCK_NAME}@beta version --registry=${MOCK_REGISTRY}`],
       [`git add package.json`],
       [`git commit -m "chore(release-beta):\\${MOCK_VERSION_UPDATED}"`],
       [`git tag v${MOCK_VERSION_UPDATED}`],
