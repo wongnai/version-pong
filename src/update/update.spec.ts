@@ -49,6 +49,18 @@ describe('startCommand', () => {
     expect(processExitSpy).not.toBeCalled()
   })
 
+  it('should use correct publish method with tagPrefix when publish as beta', async () => {
+    const {
+      default: updatePackageJson,
+    } = require('.') as typeof updatePackageJsonType
+    await updatePackageJson(PublishLevel.BETA, 'eslint')
+    expect(spinnerSpy).toBeCalledWith(MOCK_SPINNER_ARGS)
+    expect(spinnerStartSpy).toBeCalledTimes(1)
+    expect(bumpBetaVersionSpy).toBeCalledWith(mockSpinner, 'eslint')
+    expect(spinnerSucceesSpy).toBeCalledTimes(1)
+    expect(processExitSpy).not.toBeCalled()
+  })
+
   it('should use correct publish method when publish as minor', async () => {
     const {
       default: updatePackageJson,
@@ -65,6 +77,23 @@ describe('startCommand', () => {
     expect(processExitSpy).not.toBeCalled()
   })
 
+  it('should use correct publish method with tagPrefix when publish as minor', async () => {
+    const {
+      default: updatePackageJson,
+    } = require('.') as typeof updatePackageJsonType
+    await updatePackageJson(PublishLevel.MINOR, 'eslint')
+    expect(spinnerSpy).toBeCalledWith(MOCK_SPINNER_ARGS)
+    expect(spinnerStartSpy).toBeCalledTimes(1)
+    const STANDARD_VERSION_ARGS = {
+      releaseAs: 'minor',
+      silent: true,
+      tagPrefix: 'eslint@',
+    }
+    expect(standardVersionSpy).toBeCalledWith(STANDARD_VERSION_ARGS)
+    expect(spinnerSucceesSpy).toBeCalledTimes(1)
+    expect(processExitSpy).not.toBeCalled()
+  })
+
   it('should use correct publish method when publish as major', async () => {
     const {
       default: updatePackageJson,
@@ -75,6 +104,23 @@ describe('startCommand', () => {
     const STANDARD_VERSION_ARGS = {
       releaseAs: 'major',
       silent: true,
+    }
+    expect(standardVersionSpy).toBeCalledWith(STANDARD_VERSION_ARGS)
+    expect(spinnerSucceesSpy).toBeCalledTimes(1)
+    expect(processExitSpy).not.toBeCalled()
+  })
+
+  it('should use correct publish method with tagPrefix when publish as major', async () => {
+    const {
+      default: updatePackageJson,
+    } = require('.') as typeof updatePackageJsonType
+    await updatePackageJson(PublishLevel.MAJOR, 'eslint')
+    expect(spinnerSpy).toBeCalledWith(MOCK_SPINNER_ARGS)
+    expect(spinnerStartSpy).toBeCalledTimes(1)
+    const STANDARD_VERSION_ARGS = {
+      releaseAs: 'major',
+      silent: true,
+      tagPrefix: 'eslint@',
     }
     expect(standardVersionSpy).toBeCalledWith(STANDARD_VERSION_ARGS)
     expect(spinnerSucceesSpy).toBeCalledTimes(1)

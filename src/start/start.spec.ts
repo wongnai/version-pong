@@ -52,4 +52,12 @@ describe('startCommand', () => {
       PublishLevel.MAJOR,
     )
   })
+
+  it('should start command with tagPrefix option correctly', async () => {
+    const MOCK_PUBLISH_LEVEL = 'minor'
+
+    await startCommand(MOCK_PUBLISH_LEVEL, { tagPrefix: 'eslint' })
+
+    expect(updatePackageJsonSpy).toBeCalledWith(PublishLevel.MINOR, 'eslint')
+  })
 })

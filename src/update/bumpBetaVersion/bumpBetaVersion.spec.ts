@@ -4,7 +4,7 @@ describe('bumpBetaVersion', () => {
   const readFileSyncSpy = jest.fn()
   const spinnerSpy = jest.fn()
   const spinnerStartSpy = jest.fn()
-  const spinnerSucceesSpy = jest.fn()
+  const spinnerSuccessSpy = jest.fn()
   const writeFileSyncSpy = jest.fn()
   const execaSpy = jest.fn()
 
@@ -21,9 +21,9 @@ describe('bumpBetaVersion', () => {
 
   const mockSpinner = (arg: string) => {
     spinnerSpy(arg)
-    const result = { start: spinnerStartSpy, succeed: spinnerSucceesSpy }
+    const result = { start: spinnerStartSpy, succeed: spinnerSuccessSpy }
     spinnerStartSpy.mockReturnValue(result)
-    spinnerSucceesSpy.mockReturnValue(result)
+    spinnerSuccessSpy.mockReturnValue(result)
     return result
   }
 
@@ -36,13 +36,13 @@ describe('bumpBetaVersion', () => {
     writeFileSyncSpy.mockReset()
     spinnerSpy.mockReset()
     spinnerStartSpy.mockReset()
-    spinnerSucceesSpy.mockReset()
+    spinnerSuccessSpy.mockReset()
     execaSpy.mockReset()
   })
 
   const { default: bumpBetaVersion } = require('.') as typeof utilsType
 
-  it('should bump version in package.json and execute git command if argumet has correct version format', async () => {
+  it('should bump version in package.json and execute git command if argument has correct version format', async () => {
     const MOCK_REGISTRY_VERSION = '1.0.0'
     const MOCK_VERSION = '1.0.1'
     const MOCK_VERSION_UPDATED = '1.0.2'
@@ -88,7 +88,7 @@ describe('bumpBetaVersion', () => {
       EXPECT_FINAL_JSON,
     )
     expect(execaSpy.mock.calls).toEqual(EXPECTED_EXECA_COMMANDS)
-    expect(spinnerSucceesSpy).toBeCalledTimes(1)
+    expect(spinnerSuccessSpy).toBeCalledTimes(1)
 
     execaSpy.mockReset()
 
@@ -138,10 +138,10 @@ describe('bumpBetaVersion', () => {
       EXPECT_FINAL_JSON_2,
     )
     expect(execaSpy.mock.calls).toEqual(EXPECTED_EXECA_COMMANDS_2)
-    expect(spinnerSucceesSpy).toBeCalledTimes(2)
+    expect(spinnerSuccessSpy).toBeCalledTimes(2)
   })
 
-  it('should throw error if argumet has incorrect version format', async () => {
+  it('should throw error if argument has incorrect version format', async () => {
     const PACKAGE_JSON_BUFFER = Buffer.from(
       JSON.stringify({
         version: '1.0.1-alpha',
@@ -162,10 +162,10 @@ describe('bumpBetaVersion', () => {
     expect(spinnerStartSpy).toBeCalledTimes(1)
     expect(catchSpy).toBeCalledTimes(1)
     expect(writeFileSyncSpy).not.toBeCalled()
-    expect(spinnerSucceesSpy).not.toBeCalled()
+    expect(spinnerSuccessSpy).not.toBeCalled()
   })
 
-  it('should bump version in package.json and execute git command if argumet has correct version format and should use version from registry if it is higher', async () => {
+  it('should bump version in package.json and execute git command if argument has correct version format and should use version from registry if it is higher', async () => {
     const MOCK_REGISTRY_VERSION = '1.1.0'
     const MOCK_VERSION = '1.0.1'
     const MOCK_VERSION_UPDATED = '1.1.1'
@@ -211,6 +211,33 @@ describe('bumpBetaVersion', () => {
       EXPECT_FINAL_JSON,
     )
     expect(execaSpy.mock.calls).toEqual(EXPECTED_EXECA_COMMANDS)
-    expect(spinnerSucceesSpy).toBeCalledTimes(1)
+    expect(spinnerSuccessSpy).toBeCalledTimes(1)
+  })
+
+  it('should call git tag command correctly when tagPrefix option is valid', async () => {
+    const MOCK_VERSION = '1.0.1'
+    const MOCK_REGISTRY_VERSION = '1.0.1'
+    const PACKAGE_JSON_BUFFER = Buffer.from(
+      JSON.stringify({
+        name: MOCK_NAME,
+        publishConfig: { registry: MOCK_REGISTRY },
+        version: MOCK_VERSION,
+      }),
+    )
+
+    readFileSyncSpy.mockReturnValueOnce(PACKAGE_JSON_BUFFER)
+
+    execaSpy.mockReturnValueOnce({ stdout: MOCK_REGISTRY_VERSION })
+
+    await bumpBetaVersion(mockSpinner as any, 'eslint')
+
+    const EXPECTED_EXECA_COMMANDS = [
+      [`npm view ${MOCK_NAME}@beta version --registry=${MOCK_REGISTRY}`],
+      [`git add package.json`],
+      [`git commit -m "chore(release-beta):\\eslint@1.0.2"`],
+      [`git tag eslint@1.0.2`],
+    ]
+
+    expect(execaSpy.mock.calls).toEqual(EXPECTED_EXECA_COMMANDS)
   })
 })

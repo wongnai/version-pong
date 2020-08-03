@@ -4,7 +4,7 @@ import Spinner from 'ora'
 import semver from 'semver'
 import VerEx from 'verbal-expressions'
 
-const bumpBetaVersion = async (spinner: typeof Spinner) => {
+const bumpBetaVersion = async (spinner: typeof Spinner, tagPrefix?: string) => {
   const spinner$ = spinner('Updating package.json...').start()
   const packageJson = JSON.parse(fs.readFileSync('package.json').toString())
   const versionNumberTester = VerEx()
@@ -39,10 +39,17 @@ const bumpBetaVersion = async (spinner: typeof Spinner) => {
   const stringifyResult = JSON.stringify(packageJson, null, '  ')
   fs.writeFileSync('package.json', stringifyResult)
   await execa.command(`git add package.json`)
-  await execa.command(
-    `git commit -m "chore(release-beta):\\${packageJson.version}"`,
-  )
-  await execa.command(`git tag v${packageJson.version}`)
+  if (tagPrefix) {
+    await execa.command(
+      `git commit -m "chore(release-beta):\\${tagPrefix}@${packageJson.version}"`,
+    )
+    await execa.command(`git tag ${tagPrefix}@${packageJson.version}`)
+  } else {
+    await execa.command(
+      `git commit -m "chore(release-beta):\\${packageJson.version}"`,
+    )
+    await execa.command(`git tag v${packageJson.version}`)
+  }
   spinner$.succeed()
 }
 
