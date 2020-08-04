@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](http://git.wndv.co:10022///compare/v1.5.0...v1.6.0) (2020-08-04)
+
+
+### Features
+
+* Add tagPrefix option ([4183de1](http://git.wndv.co:10022///commit/4183de18629f717d9fa0325819fed08e2e20bcea))
+
 ## [1.5.0](https://git.wndv.co///compare/v1.4.0...v1.5.0) (2020-07-31)
 
 
