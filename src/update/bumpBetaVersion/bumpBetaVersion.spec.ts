@@ -240,4 +240,31 @@ describe('bumpBetaVersion', () => {
 
     expect(execaSpy.mock.calls).toEqual(EXPECTED_EXECA_COMMANDS)
   })
+
+  it('should bump version in package.json as beta correctly when release beta in first time', async () => {
+    const MOCK_VERSION = '1.1.0'
+    const MOCK_REGISTRY_VERSION = undefined
+    const PACKAGE_JSON_BUFFER = Buffer.from(
+      JSON.stringify({
+        name: MOCK_NAME,
+        publishConfig: { registry: MOCK_REGISTRY },
+        version: MOCK_VERSION,
+      }),
+    )
+
+    readFileSyncSpy.mockReturnValueOnce(PACKAGE_JSON_BUFFER)
+
+    execaSpy.mockReturnValueOnce({ stdout: MOCK_REGISTRY_VERSION })
+
+    await bumpBetaVersion(mockSpinner as any)
+
+    const EXPECTED_EXECA_COMMANDS = [
+      [`npm view ${MOCK_NAME}@beta version --registry=${MOCK_REGISTRY}`],
+      [`git add package.json`],
+      [`git commit -m "chore(release-beta):\\1.1.1"`],
+      [`git tag v1.1.1`],
+    ]
+
+    expect(execaSpy.mock.calls).toEqual(EXPECTED_EXECA_COMMANDS)
+  })
 })

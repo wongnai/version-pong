@@ -24,12 +24,15 @@ const bumpBetaVersion = async (spinner: typeof Spinner, tagPrefix?: string) => {
   const { stdout: versionOnRegistry } = await execa.command(
     `npm view ${packageJson.name}@beta version --registry=${packageJson.publishConfig.registry}`,
   )
-  const isLowerThanRegistryVersion = semver.lt(
-    packageJson.version,
-    versionOnRegistry,
-  )
-  if (isLowerThanRegistryVersion) {
-    packageJson.version = versionOnRegistry
+
+  if (versionOnRegistry) {
+    const isLowerThanRegistryVersion = semver.lt(
+      packageJson.version,
+      versionOnRegistry,
+    )
+    if (isLowerThanRegistryVersion) {
+      packageJson.version = versionOnRegistry
+    }
   }
 
   const versionNumber: number[] = packageJson.version.split('.').map(Number)
