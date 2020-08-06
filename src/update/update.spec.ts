@@ -6,7 +6,7 @@ describe('startCommand', () => {
   const bumpBetaVersionSpy = jest.fn()
   const spinnerSpy = jest.fn()
   const spinnerStartSpy = jest.fn()
-  const spinnerSucceesSpy = jest.fn()
+  const spinnerSuccessSpy = jest.fn()
 
   const processExitSpy = jest
     .spyOn(process, 'exit')
@@ -19,9 +19,9 @@ describe('startCommand', () => {
 
   const mockSpinner = (arg: string) => {
     spinnerSpy(arg)
-    const result = { start: spinnerStartSpy, succeed: spinnerSucceesSpy }
+    const result = { start: spinnerStartSpy, succeed: spinnerSuccessSpy }
     spinnerStartSpy.mockReturnValue(result)
-    spinnerSucceesSpy.mockReturnValue(result)
+    spinnerSuccessSpy.mockReturnValue(result)
     return result
   }
 
@@ -34,7 +34,7 @@ describe('startCommand', () => {
     bumpBetaVersionSpy.mockReset()
     spinnerSpy.mockReset()
     spinnerStartSpy.mockReset()
-    spinnerSucceesSpy.mockReset()
+    spinnerSuccessSpy.mockReset()
   })
 
   it('should use correct publish method when publish as beta', async () => {
@@ -44,8 +44,8 @@ describe('startCommand', () => {
     await updatePackageJson(PublishLevel.BETA)
     expect(spinnerSpy).toBeCalledWith(MOCK_SPINNER_ARGS)
     expect(spinnerStartSpy).toBeCalledTimes(1)
-    expect(bumpBetaVersionSpy).toBeCalledWith(mockSpinner)
-    expect(spinnerSucceesSpy).toBeCalledTimes(1)
+    expect(bumpBetaVersionSpy).toBeCalledWith(mockSpinner, undefined)
+    expect(spinnerSuccessSpy).toBeCalledTimes(1)
     expect(processExitSpy).not.toBeCalled()
   })
 
@@ -57,7 +57,7 @@ describe('startCommand', () => {
     expect(spinnerSpy).toBeCalledWith(MOCK_SPINNER_ARGS)
     expect(spinnerStartSpy).toBeCalledTimes(1)
     expect(bumpBetaVersionSpy).toBeCalledWith(mockSpinner, 'eslint')
-    expect(spinnerSucceesSpy).toBeCalledTimes(1)
+    expect(spinnerSuccessSpy).toBeCalledTimes(1)
     expect(processExitSpy).not.toBeCalled()
   })
 
@@ -73,7 +73,7 @@ describe('startCommand', () => {
       silent: true,
     }
     expect(standardVersionSpy).toBeCalledWith(STANDARD_VERSION_ARGS)
-    expect(spinnerSucceesSpy).toBeCalledTimes(1)
+    expect(spinnerSuccessSpy).toBeCalledTimes(1)
     expect(processExitSpy).not.toBeCalled()
   })
 
@@ -90,7 +90,7 @@ describe('startCommand', () => {
       tagPrefix: 'eslint@',
     }
     expect(standardVersionSpy).toBeCalledWith(STANDARD_VERSION_ARGS)
-    expect(spinnerSucceesSpy).toBeCalledTimes(1)
+    expect(spinnerSuccessSpy).toBeCalledTimes(1)
     expect(processExitSpy).not.toBeCalled()
   })
 
@@ -106,7 +106,7 @@ describe('startCommand', () => {
       silent: true,
     }
     expect(standardVersionSpy).toBeCalledWith(STANDARD_VERSION_ARGS)
-    expect(spinnerSucceesSpy).toBeCalledTimes(1)
+    expect(spinnerSuccessSpy).toBeCalledTimes(1)
     expect(processExitSpy).not.toBeCalled()
   })
 
@@ -123,7 +123,7 @@ describe('startCommand', () => {
       tagPrefix: 'eslint@',
     }
     expect(standardVersionSpy).toBeCalledWith(STANDARD_VERSION_ARGS)
-    expect(spinnerSucceesSpy).toBeCalledTimes(1)
+    expect(spinnerSuccessSpy).toBeCalledTimes(1)
     expect(processExitSpy).not.toBeCalled()
   })
 
@@ -137,7 +137,7 @@ describe('startCommand', () => {
     await updatePackageJson(PublishLevel.BETA)
     expect(spinnerSpy).toBeCalledTimes(1)
     expect(spinnerStartSpy).toBeCalledTimes(1)
-    expect(spinnerSucceesSpy).not.toBeCalled()
+    expect(spinnerSuccessSpy).not.toBeCalled()
     expect(processExitSpy).toBeCalledWith(1)
   })
 })

@@ -27,7 +27,7 @@ describe('startCommand', () => {
     await startCommand(MOCK_PUBLISH_LEVEL)
 
     expect(checkCommonsErrorSpy).toBeCalledWith(PublishLevel.BETA)
-    expect(updatePackageJsonSpy).toBeCalledWith(PublishLevel.BETA)
+    expect(updatePackageJsonSpy).toBeCalledWith(PublishLevel.BETA, undefined)
     expect(publishSpy).toBeCalledWith(
       MOCK_RETURN_PUBLISH_LEVEL,
       PublishLevel.BETA,
@@ -36,7 +36,7 @@ describe('startCommand', () => {
     const MOCK_PUBLISH_LEVEL_2 = 'minor'
     await startCommand(MOCK_PUBLISH_LEVEL_2)
     expect(checkCommonsErrorSpy).toBeCalledWith(PublishLevel.MINOR)
-    expect(updatePackageJsonSpy).toBeCalledWith(PublishLevel.MINOR)
+    expect(updatePackageJsonSpy).toBeCalledWith(PublishLevel.MINOR, undefined)
     expect(publishSpy).toBeCalledWith(
       MOCK_RETURN_PUBLISH_LEVEL,
       PublishLevel.MINOR,
@@ -46,7 +46,7 @@ describe('startCommand', () => {
     await startCommand(MOCK_PUBLISH_LEVEL_3)
 
     expect(checkCommonsErrorSpy).toBeCalledWith(PublishLevel.MAJOR)
-    expect(updatePackageJsonSpy).toBeCalledWith(PublishLevel.MAJOR)
+    expect(updatePackageJsonSpy).toBeCalledWith(PublishLevel.MAJOR, undefined)
     expect(publishSpy).toBeCalledWith(
       MOCK_RETURN_PUBLISH_LEVEL,
       PublishLevel.MAJOR,
