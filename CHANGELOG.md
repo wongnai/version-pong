@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](http://git.wndv.co:10022///compare/v1.7.0...v1.8.0) (2020-08-06)
+
+
+### Features
+
+* Fix bump beta error ([eae8cfe](http://git.wndv.co:10022///commit/eae8cfebef4a491c61dfcd8216938e165b4f929b))
+
 ## [1.7.0](http://git.wndv.co:10022///compare/v1.6.0...v1.7.0) (2020-08-05)
 
 
