@@ -10,7 +10,6 @@ export const startCommand = async (
   const publishLevelKey = publishLevel.toLowerCase() as PublishLevel
   const updatedPublishCommand = await checkCommonsError(publishLevelKey)
   const tagPrefix = commandOption?.tagPrefix
-  console.log(tagPrefix, 'tagPrefix')
   await updatePackageJson(publishLevelKey, tagPrefix)
   await publish(updatedPublishCommand, publishLevelKey)
 }
