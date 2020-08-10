@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](http://git.wndv.co:10022///compare/v1.8.0...v1.9.0) (2020-08-10)
+
+
+### Bug Fixes
+
+* fix prefixTag ([0d3c5f4](http://git.wndv.co:10022///commit/0d3c5f4fa6539c02c2f5fa11845bb579ee19ad65))
+
 ## [1.8.0](http://git.wndv.co:10022///compare/v1.7.0...v1.8.0) (2020-08-06)
 
 
