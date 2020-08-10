@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.10.0 (2020-08-10)
+
+
+### Features
+
+* Add tagPrefix option ([4183de1](http://git.wndv.co:10022///commit/4183de18629f717d9fa0325819fed08e2e20bcea))
+* Fix bump beta error ([eae8cfe](http://git.wndv.co:10022///commit/eae8cfebef4a491c61dfcd8216938e165b4f929b))
+
+
+### Bug Fixes
+
+* change npm registry to be dynamic ([958ba40](http://git.wndv.co:10022///commit/958ba40bbd09582e8be2b8b37b7578477d455711))
+* fix prefixTag ([0d3c5f4](http://git.wndv.co:10022///commit/0d3c5f4fa6539c02c2f5fa11845bb579ee19ad65))
+* Fix undefined tagPrefix ([b051cfc](http://git.wndv.co:10022///commit/b051cfc648792652ae04293bb43f2f9634d6e78d))
+* use latest version from npm registy if higher than current version ([9af5bb1](http://git.wndv.co:10022///commit/9af5bb14c3ee16906b7a300006dabbbc56e16014))
+
 ## [1.9.0](http://git.wndv.co:10022///compare/v1.8.0...v1.9.0) (2020-08-10)
 
 
