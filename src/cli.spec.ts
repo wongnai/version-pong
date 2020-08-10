@@ -41,6 +41,6 @@ describe('cli', () => {
     expect(argumentsSpy).toBeCalledWith(EXPECTED_ARGUMENTS)
     expect(actionSpy).toBeCalledWith(startCommand)
     expect(parseSpy).toBeCalledWith(process.argv)
-    expect(optionSpy).toBeCalledWith('-t, --tagPrefix', 'tag prefix')
+    expect(optionSpy).toBeCalledWith('-t, --tagPrefix <value>', 'tag prefix')
   })
 })
