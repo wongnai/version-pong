@@ -9,6 +9,7 @@ export const startCommand = async (
 ) => {
   const publishLevelKey = publishLevel.toLowerCase() as PublishLevel
   const updatedPublishCommand = await checkCommonsError(publishLevelKey)
+  console.log(tagPrefix, 'tagPrefix')
   await updatePackageJson(publishLevelKey, tagPrefix)
   await publish(updatedPublishCommand, publishLevelKey)
 }
