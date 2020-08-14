@@ -1,3 +1,5 @@
+import isNil from 'lodash/isNil'
+import omitBy from 'lodash/omitBy'
 import Spinner from 'ora'
 import standardVersion from 'standard-version'
 import { PublishLevel } from 'types'
@@ -10,7 +12,7 @@ const updatePackageJson = async (
   try {
     const spinner = Spinner('Tagging Package Version...').start()
     const prefix = tagPrefix && `${tagPrefix}@`
-    const prefixObj = { tagPrefix: prefix }
+    const prefixObj = omitBy({ tagPrefix: prefix }, isNil)
     switch (publishLevel) {
       case PublishLevel.BETA:
         await bumpBetaVersion(Spinner, tagPrefix)
