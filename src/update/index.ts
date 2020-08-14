@@ -21,14 +21,12 @@ const updatePackageJson = async (
         await standardVersion({
           releaseAs: 'minor',
           silent: true,
-          ...prefixObj,
         })
         break
       case PublishLevel.MAJOR:
         await standardVersion({
           releaseAs: 'major',
           silent: true,
-          ...prefixObj,
         })
         break
     }
