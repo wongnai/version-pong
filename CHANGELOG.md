@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.16.0](http://git.wndv.co:10022///compare/v1.11.0...v1.16.0) (2020-08-14)
+
+
+### Bug Fixes
+
+* fix undefined tag ([6938a15](http://git.wndv.co:10022///commit/6938a1569ea00361b5b1aae922940047d203d090))
+* fix undefined tag ([ddaa034](http://git.wndv.co:10022///commit/ddaa03435ac7307cce67225534f2325b8abbec09))
+
 ## [1.15.0](http://git.wndv.co:10022///compare/v1.11.0...v1.15.0) (2020-08-14)
 
 
