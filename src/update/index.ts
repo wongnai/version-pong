@@ -10,6 +10,7 @@ const updatePackageJson = async (
   try {
     const spinner = Spinner('Tagging Package Version...').start()
     const prefix = tagPrefix && `${tagPrefix}@`
+    const prefixObj = { tagPrefix: prefix }
     switch (publishLevel) {
       case PublishLevel.BETA:
         await bumpBetaVersion(Spinner, tagPrefix)
@@ -18,14 +19,14 @@ const updatePackageJson = async (
         await standardVersion({
           releaseAs: 'minor',
           silent: true,
-          tagPrefix: prefix,
+          ...prefixObj,
         })
         break
       case PublishLevel.MAJOR:
         await standardVersion({
           releaseAs: 'major',
           silent: true,
-          tagPrefix: prefix,
+          ...prefixObj,
         })
         break
     }
