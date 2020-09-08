@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.0](http://git.wndv.co:10022///compare/v1.16.0...v1.17.0) (2020-09-08)
+
+
+### Bug Fixes
+
+* fix release-beta commit message ([965becf](http://git.wndv.co:10022///commit/965becfc87940d83e97bf6ae514f933fafae9c0b))
+
 ## [1.16.0](http://git.wndv.co:10022///compare/v1.11.0...v1.16.0) (2020-08-14)
 
 
