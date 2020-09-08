@@ -65,7 +65,7 @@ describe('bumpBetaVersion', () => {
     const EXPECTED_EXECA_COMMANDS = [
       [`npm view ${MOCK_NAME}@beta version --registry=${MOCK_REGISTRY}`],
       [`git add package.json`],
-      [`git commit -m "chore(release-beta):\\${MOCK_VERSION_UPDATED}"`],
+      [`git commit -m chore(release-beta):${MOCK_VERSION_UPDATED}`],
       [`git tag v${MOCK_VERSION_UPDATED}`],
     ]
 
@@ -116,7 +116,7 @@ describe('bumpBetaVersion', () => {
     const EXPECTED_EXECA_COMMANDS_2 = [
       [`npm view ${MOCK_NAME}@beta version --registry=${MOCK_REGISTRY}`],
       [`git add package.json`],
-      [`git commit -m "chore(release-beta):\\${MOCK_VERSION_2_UPDATED}"`],
+      [`git commit -m chore(release-beta):${MOCK_VERSION_2_UPDATED}`],
       [`git tag v${MOCK_VERSION_2_UPDATED}`],
     ]
 
@@ -188,7 +188,7 @@ describe('bumpBetaVersion', () => {
     const EXPECTED_EXECA_COMMANDS = [
       [`npm view ${MOCK_NAME}@beta version --registry=${MOCK_REGISTRY}`],
       [`git add package.json`],
-      [`git commit -m "chore(release-beta):\\${MOCK_VERSION_UPDATED}"`],
+      [`git commit -m chore(release-beta):${MOCK_VERSION_UPDATED}`],
       [`git tag v${MOCK_VERSION_UPDATED}`],
     ]
 
@@ -234,7 +234,7 @@ describe('bumpBetaVersion', () => {
     const EXPECTED_EXECA_COMMANDS = [
       [`npm view ${MOCK_NAME}@beta version --registry=${MOCK_REGISTRY}`],
       [`git add package.json`],
-      [`git commit -m "chore(release-beta):\\eslint@1.0.2"`],
+      [`git commit -m chore(release-beta):eslint@1.0.2`],
       [`git tag eslint@1.0.2`],
     ]
 
@@ -261,7 +261,7 @@ describe('bumpBetaVersion', () => {
     const EXPECTED_EXECA_COMMANDS = [
       [`npm view ${MOCK_NAME}@beta version --registry=${MOCK_REGISTRY}`],
       [`git add package.json`],
-      [`git commit -m "chore(release-beta):\\1.1.1"`],
+      [`git commit -m chore(release-beta):1.1.1`],
       [`git tag v1.1.1`],
     ]
 

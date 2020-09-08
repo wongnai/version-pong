@@ -44,12 +44,12 @@ const bumpBetaVersion = async (spinner: typeof Spinner, tagPrefix?: string) => {
   await execa.command(`git add package.json`)
   if (tagPrefix) {
     await execa.command(
-      `git commit -m "chore(release-beta):\\${tagPrefix}@${packageJson.version}"`,
+      `git commit -m chore(release-beta):${tagPrefix}@${packageJson.version}`,
     )
     await execa.command(`git tag ${tagPrefix}@${packageJson.version}`)
   } else {
     await execa.command(
-      `git commit -m "chore(release-beta):\\${packageJson.version}"`,
+      `git commit -m chore(release-beta):${packageJson.version}`,
     )
     await execa.command(`git tag v${packageJson.version}`)
   }
