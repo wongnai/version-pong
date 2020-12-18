@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.18.0](http://git.wndv.co:10022///compare/v1.17.0...v1.18.0) (2020-12-18)
+
+
+### Features
+
+* Public Version Pong ([34d93f0](http://git.wndv.co:10022///commit/34d93f09345fd2eb1186c0d1b883bb07b740c193))
+* watched peer dependencies ([6b9dd86](http://git.wndv.co:10022///commit/6b9dd86129e720fd12d0eed1e1ef2477d8a11f17))
+
 ## [1.17.0](http://git.wndv.co:10022///compare/v1.16.0...v1.17.0) (2020-09-08)
 
 
