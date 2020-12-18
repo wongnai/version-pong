@@ -4,6 +4,7 @@ import Spinner from 'ora'
 import standardVersion from 'standard-version'
 import { PublishLevel } from 'types'
 import bumpBetaVersion from './bumpBetaVersion'
+import watchPeerDependencies from './watchPeerDependencies'
 
 const updatePackageJson = async (
   publishLevel: PublishLevel,
@@ -13,6 +14,7 @@ const updatePackageJson = async (
     const spinner = Spinner('Tagging Package Version...').start()
     const prefix = tagPrefix && `${tagPrefix}@`
     const prefixObj = omitBy({ tagPrefix: prefix }, isNil)
+    await watchPeerDependencies()
     switch (publishLevel) {
       case PublishLevel.BETA:
         await bumpBetaVersion(Spinner, tagPrefix)
