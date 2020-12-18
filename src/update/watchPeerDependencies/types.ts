@@ -1,5 +1,5 @@
 export interface PackageJson {
-  watchedDependencies?: string[]
+  watchDependencies?: string[]
   peerDependencies?: Record<string, string>
   devDependencies?: Record<string, string>
 }

@@ -44,7 +44,7 @@ describe('watchPeerDependencies', () => {
             test2: '~26.1.0',
             test3: '26.1.0',
           },
-          watchedDependencies: ['test1', 'test2', 'test3'],
+          watchDependencies: ['test1', 'test2', 'test3'],
         }),
       ),
     )
@@ -60,7 +60,7 @@ describe('watchPeerDependencies', () => {
             test2: '~26.1.0',
             test3: '26.1.0',
           },
-          watchedDependencies: ['test1', 'test2', 'test3'],
+          watchDependencies: ['test1', 'test2', 'test3'],
           peerDependencies: {
             test1: '>=26.1.0',
             test2: '>=26.1.0',
@@ -87,7 +87,7 @@ describe('watchPeerDependencies', () => {
           devDependencies: {
             test1: '^26.1.0',
           },
-          watchedDependencies: ['test1', 'test2'],
+          watchDependencies: ['test1', 'test2'],
         }),
       ),
     )
@@ -101,7 +101,7 @@ describe('watchPeerDependencies', () => {
           devDependencies: {
             test1: '^26.1.0',
           },
-          watchedDependencies: ['test1', 'test2'],
+          watchDependencies: ['test1', 'test2'],
           peerDependencies: {
             test1: '>=26.1.0',
           },

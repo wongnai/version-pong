@@ -10,7 +10,7 @@ const watchPeerDependencies = () => {
     ) as PackageJson
 
     packageJSON.peerDependencies =
-      packageJSON?.watchedDependencies?.reduce(
+      packageJSON?.watchDependencies?.reduce(
         (peerDepdendencies, watchedDependencyKey) => {
           const devDependency =
             packageJSON.devDependencies?.[watchedDependencyKey]
