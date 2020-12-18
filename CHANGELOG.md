@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.0](http://git.wndv.co:10022///compare/v1.19.0...v1.20.0) (2020-12-18)
+
 ## [1.19.0](http://git.wndv.co:10022///compare/v1.18.0...v1.19.0) (2020-12-18)
 
 ## [1.18.0](http://git.wndv.co:10022///compare/v1.17.0...v1.18.0) (2020-12-18)
