@@ -3,7 +3,6 @@ import omitBy from 'lodash/omitBy'
 import Spinner from 'ora'
 import standardVersion from 'standard-version'
 import { PublishLevel } from 'types'
-import bumpBetaVersion from './bumpBetaVersion'
 import watchPeerDependencies from './watchPeerDependencies'
 
 const updatePackageJson = async (
@@ -17,7 +16,21 @@ const updatePackageJson = async (
     await watchPeerDependencies()
     switch (publishLevel) {
       case PublishLevel.BETA:
-        await bumpBetaVersion(Spinner, tagPrefix)
+        await standardVersion({
+          prerelease: 'beta',
+          skip: {
+            changelog: true,
+          },
+          silent: true,
+          ...prefixObj,
+        })
+        break
+      case PublishLevel.PATCH:
+        await standardVersion({
+          releaseAs: 'patch',
+          silent: true,
+          ...prefixObj,
+        })
         break
       case PublishLevel.MINOR:
         await standardVersion({

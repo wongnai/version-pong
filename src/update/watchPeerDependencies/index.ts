@@ -27,7 +27,10 @@ const watchPeerDependencies = () => {
         {},
       ) || {}
 
-    fs.writeFileSync('package.json', JSON.stringify(packageJSON, null, '  '))
+    fs.writeFileSync(
+      'package.json',
+      `${JSON.stringify(packageJSON, null, '  ')}\n`,
+    )
   } catch (error) {
     console.error(error)
     console.log('WatchPeerDependencies failure')
