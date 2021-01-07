@@ -3,7 +3,6 @@ import * as updatePackageJsonType from '.'
 
 describe('startCommand', () => {
   const standardVersionSpy = jest.fn()
-  const bumpBetaVersionSpy = jest.fn()
   const spinnerSpy = jest.fn()
   const spinnerStartSpy = jest.fn()
   const spinnerSuccessSpy = jest.fn()
@@ -15,7 +14,6 @@ describe('startCommand', () => {
   const MOCK_SPINNER_ARGS = 'Tagging Package Version...'
 
   jest.doMock('standard-version', () => standardVersionSpy)
-  jest.doMock('./bumpBetaVersion', () => bumpBetaVersionSpy)
 
   const mockSpinner = (arg: string) => {
     spinnerSpy(arg)
@@ -31,32 +29,42 @@ describe('startCommand', () => {
 
   afterEach(() => {
     standardVersionSpy.mockReset()
-    bumpBetaVersionSpy.mockReset()
     spinnerSpy.mockReset()
     spinnerStartSpy.mockReset()
     spinnerSuccessSpy.mockReset()
-  })
-
-  it('should use correct publish method when publish as beta', async () => {
-    const {
-      default: updatePackageJson,
-    } = require('.') as typeof updatePackageJsonType
-    await updatePackageJson(PublishLevel.BETA)
-    expect(spinnerSpy).toBeCalledWith(MOCK_SPINNER_ARGS)
-    expect(spinnerStartSpy).toBeCalledTimes(1)
-    expect(bumpBetaVersionSpy).toBeCalledWith(mockSpinner, undefined)
-    expect(spinnerSuccessSpy).toBeCalledTimes(1)
-    expect(processExitSpy).not.toBeCalled()
   })
 
   it('should use correct publish method with tagPrefix when publish as beta', async () => {
     const {
       default: updatePackageJson,
     } = require('.') as typeof updatePackageJsonType
-    await updatePackageJson(PublishLevel.BETA, 'eslint')
+    await updatePackageJson(PublishLevel.BETA)
     expect(spinnerSpy).toBeCalledWith(MOCK_SPINNER_ARGS)
     expect(spinnerStartSpy).toBeCalledTimes(1)
-    expect(bumpBetaVersionSpy).toBeCalledWith(mockSpinner, 'eslint')
+    const STANDARD_VERSION_ARGS = {
+      prerelease: 'beta',
+      skip: {
+        changelog: true,
+      },
+      silent: true,
+    }
+    expect(standardVersionSpy).toBeCalledWith(STANDARD_VERSION_ARGS)
+    expect(spinnerSuccessSpy).toBeCalledTimes(1)
+    expect(processExitSpy).not.toBeCalled()
+  })
+
+  it('should use correct publish method when publish as patch', async () => {
+    const {
+      default: updatePackageJson,
+    } = require('.') as typeof updatePackageJsonType
+    await updatePackageJson(PublishLevel.PATCH)
+    expect(spinnerSpy).toBeCalledWith(MOCK_SPINNER_ARGS)
+    expect(spinnerStartSpy).toBeCalledTimes(1)
+    const STANDARD_VERSION_ARGS = {
+      releaseAs: 'patch',
+      silent: true,
+    }
+    expect(standardVersionSpy).toBeCalledWith(STANDARD_VERSION_ARGS)
     expect(spinnerSuccessSpy).toBeCalledTimes(1)
     expect(processExitSpy).not.toBeCalled()
   })
@@ -131,7 +139,7 @@ describe('startCommand', () => {
     const {
       default: updatePackageJson,
     } = require('.') as typeof updatePackageJsonType
-    bumpBetaVersionSpy.mockImplementationOnce(() => {
+    standardVersionSpy.mockImplementationOnce(() => {
       throw new Error('BOOM')
     })
     await updatePackageJson(PublishLevel.BETA)

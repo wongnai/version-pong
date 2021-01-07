@@ -25,13 +25,13 @@ describe('watchPeerDependencies', () => {
 
     expect(writeFileSyncSpy).toBeCalledWith(
       'package.json',
-      JSON.stringify(
+      `${JSON.stringify(
         {
           peerDependencies: {},
         },
         null,
         '  ',
-      ),
+      )}\n`,
     )
   })
 
@@ -53,7 +53,7 @@ describe('watchPeerDependencies', () => {
 
     expect(writeFileSyncSpy).toBeCalledWith(
       'package.json',
-      JSON.stringify(
+      `${JSON.stringify(
         {
           devDependencies: {
             test1: '^26.1.0',
@@ -69,7 +69,7 @@ describe('watchPeerDependencies', () => {
         },
         null,
         '  ',
-      ),
+      )}\n`,
     )
   })
 
@@ -96,7 +96,7 @@ describe('watchPeerDependencies', () => {
 
     expect(writeFileSyncSpy).toBeCalledWith(
       'package.json',
-      JSON.stringify(
+      `${JSON.stringify(
         {
           devDependencies: {
             test1: '^26.1.0',
@@ -108,7 +108,7 @@ describe('watchPeerDependencies', () => {
         },
         null,
         '  ',
-      ),
+      )}\n`,
     )
   })
 })
