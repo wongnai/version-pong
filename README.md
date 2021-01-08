@@ -38,6 +38,10 @@ In `package.json`
 }
 ```
 
+#### Settings
+
+* method - The method that perform for publishing library
+
 ## Usage
 
 ### Publish Library
