@@ -4,7 +4,7 @@ export const DEFAULT_PUBLISH_COMMAND = 'npm publish'
 
 export const PublishBranch = {
   [PublishLevel.BETA]: 'dev',
-  [PublishLevel.PATCH]: 'dev',
+  [PublishLevel.PATCH]: 'master',
   [PublishLevel.MINOR]: 'master',
   [PublishLevel.MAJOR]: 'master',
 }
