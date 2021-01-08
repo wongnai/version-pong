@@ -1,0 +1,46 @@
+{
+  "name": "version-pong",
+  "version": "2.0.0",
+  "description": "Publish NPM package and automated bump version in the package.json with the Wongnai version convention.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest --watch",
+    "test:oc": "jest --watch -o",
+    "build": "rollup -c",
+    "release:major": "version-pong major",
+    "release:minor": "version-pong minor",
+    "release:beta": "version-pong beta"
+  },
+  "bin": {
+    "version-pong": "dist/index.js"
+  },
+  "keywords": [],
+  "author": "LINE MAN Wongnai Frontend Team",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^5.1.0",
+    "execa": "^4.0.2",
+    "inquirer": "^7.2.0",
+    "lodash": "^4.17.15",
+    "ora": "^4.0.4",
+    "semver": "^7.3.2",
+    "standard-version": "^8.0.0",
+    "verbal-expressions": "^1.0.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-json": "^4.1.0",
+    "@types/inquirer": "^6.5.0",
+    "@types/jest": "^26.0.0",
+    "@types/lodash": "^4.14.157",
+    "@types/semver": "^7.3.1",
+    "@types/standard-version": "^7.0.0",
+    "jest": "^26.0.1",
+    "mama-noodle": "^1.0.0",
+    "ts-jest": "^26.1.0"
+  },
+  "version-pong": {
+    "method": "yarn build && npm publish"
+  },
+  "peerDependencies": {}
+}
