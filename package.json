@@ -1,6 +1,6 @@
 {
   "name": "version-pong",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Publish NPM package and automated bump version in the package.json with the Wongnai version convention.",
   "main": "dist/index.js",
   "scripts": {

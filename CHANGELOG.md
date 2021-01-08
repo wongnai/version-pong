@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.1.0 (2021-01-08)
+
+
+### Features
+
+* Add tagPrefix option ([e016d5b](http://git.wndv.co:10022///commit/e016d5bb0bb1f9e54f2d058d55f8d5ba2dc15eb9))
+* Fix bump beta error ([f0981d8](http://git.wndv.co:10022///commit/f0981d825161f5d5d4dcee8303411437a3b85f34))
+* Public Version Pong ([48c407e](http://git.wndv.co:10022///commit/48c407ef4c689897abd79181c024eb03f4b9ce2a))
+* Support Patch Publish (Use Real Beta Prelease) ([4a247d7](http://git.wndv.co:10022///commit/4a247d7903edff1f9af3460a0be36a46e25d2f5f))
+* watched peer dependencies ([d312106](http://git.wndv.co:10022///commit/d31210672199506516d005c4ad737d8aa92ec814))
+
+
+### Bug Fixes
+
+* change npm registry to be dynamic ([3f926b4](http://git.wndv.co:10022///commit/3f926b40059a2494b3662a84bdec3077e9091185))
+* fix prefixTag ([b543f9b](http://git.wndv.co:10022///commit/b543f9b37ec7d25f8cf0194a23a96f29c2af9209))
+* fix release-beta commit message ([a42cdd4](http://git.wndv.co:10022///commit/a42cdd4b06fb0a44cdadc70a9f4db5e860f37be5))
+* fix tagPrefix wrong ([bfe588d](http://git.wndv.co:10022///commit/bfe588d4f24ab7ddb7ecc641a72aed426e936191))
+* fix undefined tag ([081c07d](http://git.wndv.co:10022///commit/081c07d6f64a54304b43255d32bed2b5de0e78d8))
+* fix undefined tag ([fa9491b](http://git.wndv.co:10022///commit/fa9491ba882b0bb24e9949e0c917d6644969af7b))
+* Fix undefined tagPrefix ([db42ac9](http://git.wndv.co:10022///commit/db42ac960f716c4550264f6873b787dc9ec98bf7))
+* use latest version from npm registy if higher than current version ([0dd0b80](http://git.wndv.co:10022///commit/0dd0b80aca54d7789570aa5d979d462f3ea4465e))
+
 ## [2.0.0](http://git.wndv.co:10022///compare/v1.20.0...v2.0.0) (2020-12-22)
 
 ## [1.20.0](http://git.wndv.co:10022///compare/v1.19.0...v1.20.0) (2020-12-18)
