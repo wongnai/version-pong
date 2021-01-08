@@ -68,3 +68,12 @@ $ version-pong minor -t eslint
 
 - -t , --tagPrefix : git tag prefix
   - **ex.** eslint@1.1.1 (tagPrefix is eslint)
+
+
+# Contributors ✨
+
+* Norapat Buppodom - [new5558](https://github.com/new5558)
+* Phasin Sarunpornkul - [gunhappy](https://github.com/gunhappy)
+* Thanadej Phadtong - [Thanadej8](https://github.com/Thanadej8)
+* Voraton Lertrattanapaisal - [ReiiYuki](https://github.com/ReiiYuki)
+* LINE MAN Wongnai Frontend Team
