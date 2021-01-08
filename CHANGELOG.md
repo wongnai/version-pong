@@ -25,12 +25,6 @@ All notable changes to this project will be documented in this file. See [standa
 * Fix undefined tagPrefix ([db42ac9](http://git.wndv.co:10022///commit/db42ac960f716c4550264f6873b787dc9ec98bf7))
 * use latest version from npm registy if higher than current version ([0dd0b80](http://git.wndv.co:10022///commit/0dd0b80aca54d7789570aa5d979d462f3ea4465e))
 
-## [2.0.0](http://git.wndv.co:10022///compare/v1.20.0...v2.0.0) (2020-12-22)
-
-## [1.20.0](http://git.wndv.co:10022///compare/v1.19.0...v1.20.0) (2020-12-18)
-
-## [1.19.0](http://git.wndv.co:10022///compare/v1.18.0...v1.19.0) (2020-12-18)
-
 ## [1.18.0](http://git.wndv.co:10022///compare/v1.17.0...v1.18.0) (2020-12-18)
 
 
@@ -68,8 +62,6 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * fix undefined tag ([ddaa034](http://git.wndv.co:10022///commit/ddaa03435ac7307cce67225534f2325b8abbec09))
-
-## [1.13.0](http://git.wndv.co:10022///compare/v1.11.0...v1.13.0) (2020-08-14)
 
 ## [1.11.0](http://git.wndv.co:10022///compare/v1.9.0...v1.11.0) (2020-08-10)
 
@@ -135,9 +127,3 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * use latest version from npm registy if higher than current version ([9af5bb1](https://git.wndv.co///commit/9af5bb14c3ee16906b7a300006dabbbc56e16014))
-
-## [1.3.0](https://git.wndv.co///compare/v1.2.0...v1.3.0) (2020-07-09)
-
-## [1.2.0](https://git.wndv.co///compare/v1.1.0...v1.2.0) (2020-07-03)
-
-## 1.1.0 (2020-07-01)

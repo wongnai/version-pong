@@ -1,7 +1,7 @@
 {
   "name": "version-pong",
   "version": "2.1.0",
-  "description": "Publish NPM package and automated bump version in the package.json with the Wongnai version convention.",
+  "description": "Publish NPM package and automated bump version in the package.json based on Standard Version.",
   "main": "dist/index.js",
   "scripts": {
     "test": "jest --watch",
@@ -10,6 +10,10 @@
     "release:major": "version-pong major",
     "release:minor": "version-pong minor",
     "release:beta": "version-pong beta"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wongnai/version-pong.git"
   },
   "bin": {
     "version-pong": "dist/index.js"
