@@ -2,6 +2,15 @@
 
 Publish npm package and automated bump version in the package.json based on Standard Version.
 
+## Version Pong Abilities
+
+4 Steps will be performed in 1 Command!
+
+1. Update Peer Dependencies versions
+2. Tagging Version and Generate Auto Changelog
+3. Publish to npm registry
+4. Push all release change to target branch
+
 ## Installation
 
 ### As Global CLI
@@ -22,9 +31,16 @@ In `package.json`
 {
     "scripts": {
         "release": "version-pong"
+    },
+    "version-pong": {
+      "method": "yarn build && yarn publish"
     }
 }
 ```
+
+#### Settings
+
+* method - The method that perform for publishing library
 
 ## Usage
 
