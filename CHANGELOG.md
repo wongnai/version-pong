@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/wongnai/version-pong/compare/v2.1.0...v2.1.1) (2021-01-08)
+
+
+### Bug Fixes
+
+* Add Git Homepage to NPM & Clean Changelog ([de036be](https://github.com/wongnai/version-pong/commit/de036be881ea2aea3a8cc216dbacabfc51c1fbd7))
+* Correct Patch should publish in master only ([279776e](https://github.com/wongnai/version-pong/commit/279776ec4cf370ee15a9eaa748bd02dd00d11436))
+
 ## 2.1.0 (2021-01-08)
 
 
