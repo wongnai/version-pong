@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.2](https://github.com/wongnai/version-pong/compare/v2.1.1...v2.1.2) (2021-01-11)
+
+
+### Features
+
+* Add Document about PeerDependencies and WatchDependencies ([3b5c8d7](https://github.com/wongnai/version-pong/commit/3b5c8d7c00bbbd5267b1bb9b5daaa41050e3e0cc))
+* Add Publish Method Sample in README.md and Add Version Pong Ability ([963eede](https://github.com/wongnai/version-pong/commit/963eeded468cf7c9dbf322da005f77a766e228f6))
+
 ### [2.1.1](https://github.com/wongnai/version-pong/compare/v2.1.0...v2.1.1) (2021-01-08)
 
 

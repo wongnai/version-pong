@@ -1,6 +1,6 @@
 {
   "name": "version-pong",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Publish NPM package and automated bump version in the package.json based on Standard Version.",
   "main": "dist/index.js",
   "scripts": {
