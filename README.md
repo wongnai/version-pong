@@ -61,7 +61,7 @@ In `package.json`
 }
 ```
 
-When you run version-pong published command, you will get generated Peer Dependencies.
+Once version-pong is run with published command, it automatically generates `peerDependencies`.
 
 example
 
