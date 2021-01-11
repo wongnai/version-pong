@@ -44,6 +44,10 @@ In `package.json`
 
 ### Peer Dependencies 
 
+#### What is Peer Dependencies?
+
+[Peer Dependencies](https://nodejs.org/es/blog/npm/peer-dependencies/)
+
 If your package need to define `peerDependencies`, add `target peer dependency package name` to `watchDependencies`
 
 add `library name` to `watchDependencies`.
@@ -83,10 +87,6 @@ In `package.json`
 
 * watchDependencies - List of `devDependencies` to be convert to `peerDependencies`.
 * peerDependencies -  Auto Generated Dependencies in `>=xx.xx.xx` version format with watchDependencies by version-pong.
-
-### What is Peer Dependencies?
-
-[Peer Dependencies](https://nodejs.org/es/blog/npm/peer-dependencies/)
 
 ## Usage
 
