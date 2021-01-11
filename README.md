@@ -42,6 +42,52 @@ In `package.json`
 
 * method - The method that perform for publishing library
 
+### Peer Dependencies 
+
+If you need to generate Peer Dependencies.
+
+add `library name` to `watchDependencies`.
+
+example
+
+In `package.json`
+
+```json
+{
+    "devDependencies": {
+      "jest": "^26.0.1",
+    },
+    "watchDependencies": ["jest"]
+}
+```
+
+When ran command. you get Peer Dependencies.
+
+example
+
+In `package.json`
+
+```json
+{
+    "devDependencies": {
+      "jest": "^26.0.1",
+    },
+    "watchDependencies": ["jest"],
+    "peerDependencies": {
+      "jest": ">=26.0.1",
+    }
+}
+```
+
+#### Settings
+
+* watchDependencies - List of `devDependencies` to be convert to `peerDependencies`.
+* peerDependencies -  Generate `>=xx.xx.xx` version format.
+
+### What is Peer Dependencies?
+
+[Peer Dependencies](https://nodejs.org/es/blog/npm/peer-dependencies/)
+
 ## Usage
 
 ### Publish Library
