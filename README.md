@@ -44,7 +44,7 @@ In `package.json`
 
 ### Peer Dependencies 
 
-If you need to generate Peer Dependencies.
+If your package need to define `peerDependencies`, add `target peer dependency package name` to `watchDependencies`
 
 add `library name` to `watchDependencies`.
 
