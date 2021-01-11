@@ -82,7 +82,7 @@ In `package.json`
 #### Settings
 
 * watchDependencies - List of `devDependencies` to be convert to `peerDependencies`.
-* peerDependencies -  Generate `>=xx.xx.xx` version format.
+* peerDependencies -  Auto Generated Dependencies in `>=xx.xx.xx` version format with watchDependencies by version-pong.
 
 ### What is Peer Dependencies?
 
