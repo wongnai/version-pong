@@ -42,6 +42,48 @@ In `package.json`
 
 * method - The method that perform for publishing library
 
+### What is watchDependencies? 
+
+If your package need to define `peerDependencies`, add `target peer dependency package name` to `watchDependencies`
+
+add `library name` to `watchDependencies`.
+
+example
+
+In `package.json`
+
+```json
+{
+    "devDependencies": {
+      "jest": "^26.0.1",
+    },
+    "watchDependencies": ["jest"]
+}
+```
+
+Once version-pong is run with published command, it automatically generates `peerDependencies`.
+
+example
+
+In `package.json`
+
+```json
+{
+    "devDependencies": {
+      "jest": "^26.0.1",
+    },
+    "watchDependencies": ["jest"],
+    "peerDependencies": {
+      "jest": ">=26.0.1",
+    }
+}
+```
+
+#### Settings
+
+* watchDependencies - List of `devDependencies` to be convert to `peerDependencies`.
+* peerDependencies -  Auto Generated Dependencies in `>=xx.xx.xx` version format with watchDependencies by version-pong.
+
 ## Usage
 
 ### Publish Library
