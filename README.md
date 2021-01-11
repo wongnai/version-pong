@@ -42,7 +42,7 @@ In `package.json`
 
 * method - The method that perform for publishing library
 
-### Peer Dependencies 
+### What is watchDependencies? 
 
 If your package need to define `peerDependencies`, add `target peer dependency package name` to `watchDependencies`
 
