@@ -28,10 +28,7 @@ describe('startCommand', () => {
   })
 
   afterEach(() => {
-    standardVersionSpy.mockReset()
-    spinnerSpy.mockReset()
-    spinnerStartSpy.mockReset()
-    spinnerSuccessSpy.mockReset()
+    jest.resetAllMocks()
   })
 
   it('should use correct publish method with tagPrefix when publish as beta', async () => {
@@ -40,7 +37,7 @@ describe('startCommand', () => {
     } = require('.') as typeof updatePackageJsonType
     await updatePackageJson(PublishLevel.BETA)
     expect(spinnerSpy).toBeCalledWith(MOCK_SPINNER_ARGS)
-    expect(spinnerStartSpy).toBeCalledTimes(1)
+    expect(spinnerStartSpy).toBeCalledTimes(2)
     const STANDARD_VERSION_ARGS = {
       prerelease: 'beta',
       skip: {
@@ -49,7 +46,7 @@ describe('startCommand', () => {
       silent: true,
     }
     expect(standardVersionSpy).toBeCalledWith(STANDARD_VERSION_ARGS)
-    expect(spinnerSuccessSpy).toBeCalledTimes(1)
+    expect(spinnerSuccessSpy).toBeCalledTimes(2)
     expect(processExitSpy).not.toBeCalled()
   })
 
@@ -142,7 +139,7 @@ describe('startCommand', () => {
     standardVersionSpy.mockImplementationOnce(() => {
       throw new Error('BOOM')
     })
-    await updatePackageJson(PublishLevel.BETA)
+    await updatePackageJson(PublishLevel.MAJOR)
     expect(spinnerSpy).toBeCalledTimes(1)
     expect(spinnerStartSpy).toBeCalledTimes(1)
     expect(spinnerSuccessSpy).not.toBeCalled()
