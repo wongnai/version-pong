@@ -16,7 +16,8 @@
     "url": "git+https://github.com/wongnai/version-pong.git"
   },
   "bin": {
-    "version-pong": "dist/index.js"
+    "version-pong": "dist/index.js",
+    "vp": "dist/index.js"
   },
   "keywords": [],
   "author": "LINE MAN Wongnai Frontend Team",
