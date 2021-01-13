@@ -74,7 +74,7 @@ describe('checkPublishMethod', () => {
         test: 'test',
       }),
     )
-    const EXPECT_FINAL_JSON_2 = JSON.stringify(
+    const EXPECT_FINAL_JSON_2 = `${JSON.stringify(
       {
         test: 'test',
         ['version-pong']: {
@@ -82,8 +82,8 @@ describe('checkPublishMethod', () => {
         },
       },
       null,
-      '  ',
-    )
+      2,
+    )}\n`
 
     readFileSyncSpy
       .mockReturnValueOnce(PACKAGE_JSON_BUFFER)

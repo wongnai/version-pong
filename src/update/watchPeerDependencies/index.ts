@@ -1,13 +1,12 @@
 import fs from 'fs'
+import getPackageJsonFromFile from 'utils/getPackageJsonFromFile'
+import writePackageJsonFile from 'utils/writePackageJsonFile'
 
-import { PackageJson } from './types'
 import addPrefixVersionOfPeerDependency from './utils/addPrefixVersionOfPeerDependency'
 
 const watchPeerDependencies = () => {
   try {
-    const packageJSON = JSON.parse(
-      fs.readFileSync('package.json').toString(),
-    ) as PackageJson
+    const packageJSON = getPackageJsonFromFile()
 
     packageJSON.peerDependencies =
       packageJSON?.watchDependencies?.reduce(
@@ -27,10 +26,7 @@ const watchPeerDependencies = () => {
         {},
       ) || {}
 
-    fs.writeFileSync(
-      'package.json',
-      `${JSON.stringify(packageJSON, null, '  ')}\n`,
-    )
+    writePackageJsonFile(packageJSON)
   } catch (error) {
     console.error(error)
     console.log('WatchPeerDependencies failure')

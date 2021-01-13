@@ -1,10 +1,12 @@
 import chalk from 'chalk'
 import fs from 'fs'
 import Asker from 'inquirer'
+import getPackageJsonFromFile from 'utils/getPackageJsonFromFile'
+import writePackageJsonFile from 'utils/writePackageJsonFile'
 import { questions } from './questions'
 
 const checkPublishMethod = async (): Promise<string> => {
-  const packageJson = JSON.parse(fs.readFileSync('package.json').toString())
+  const packageJson = getPackageJsonFromFile()
   const versionPongOptions = packageJson['version-pong']
   if (
     !versionPongOptions ||
@@ -20,8 +22,7 @@ const checkPublishMethod = async (): Promise<string> => {
     packageJson['version-pong'] = Object.assign({}, versionPongOptions, {
       method: answer.publishCommand,
     })
-    const stringifyResult = JSON.stringify(packageJson, null, '  ')
-    fs.writeFileSync('package.json', stringifyResult)
+    writePackageJsonFile(packageJson)
     return answer.publishCommand
   }
   return versionPongOptions.method
