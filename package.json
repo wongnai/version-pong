@@ -7,9 +7,7 @@
     "test": "jest --watch",
     "test:oc": "jest --watch -o",
     "build": "rollup -c",
-    "release:major": "version-pong major",
-    "release:minor": "version-pong minor",
-    "release:beta": "version-pong beta"
+    "release": "version-pong"
   },
   "repository": {
     "type": "git",
