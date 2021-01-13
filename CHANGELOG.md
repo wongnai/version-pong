@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/wongnai/version-pong/compare/v2.1.2...v2.2.0) (2021-01-13)
+
+
+### Features
+
+* Support vp as version-pong alias ([9663910](https://github.com/wongnai/version-pong/commit/9663910a2c5b21dab51092294edbe17c9717d72a))
+
 ### [2.1.2](https://github.com/wongnai/version-pong/compare/v2.1.1...v2.1.2) (2021-01-11)
 
 
