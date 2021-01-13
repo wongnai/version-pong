@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [2.2.1](https://github.com/wongnai/version-pong/compare/v2.2.0...v2.2.1) (2021-01-13)
 
+
+### Bug Fixes
+
+* Fix bump beta version may cause conflict exist version on registry
+
 ## [2.2.0](https://github.com/wongnai/version-pong/compare/v2.1.2...v2.2.0) (2021-01-13)
 
 
